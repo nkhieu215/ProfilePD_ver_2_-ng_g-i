@@ -1,0 +1,125 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-lenh-san-xuat-heading" data-cy="LenhSanXuatCreateUpdateHeading">Create or edit a Lenh San Xuat</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_maLenhSanXuat">Ma Lenh San Xuat</label>
+          <input
+            type="number"
+            class="form-control"
+            name="maLenhSanXuat"
+            id="field_maLenhSanXuat"
+            data-cy="maLenhSanXuat"
+            formControlName="maLenhSanXuat"
+          />
+          <div
+            *ngIf="
+              editForm.get('maLenhSanXuat')!.invalid && (editForm.get('maLenhSanXuat')!.dirty || editForm.get('maLenhSanXuat')!.touched)
+            "
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('maLenhSanXuat')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('maLenhSanXuat')?.errors?.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_sapCode">Sap Code</label>
+          <input type="text" class="form-control" name="sapCode" id="field_sapCode" data-cy="sapCode" formControlName="sapCode" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_sapName">Sap Name</label>
+          <input type="text" class="form-control" name="sapName" id="field_sapName" data-cy="sapName" formControlName="sapName" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_workOrderCode">Work Order Code</label>
+          <input
+            type="text"
+            class="form-control"
+            name="workOrderCode"
+            id="field_workOrderCode"
+            data-cy="workOrderCode"
+            formControlName="workOrderCode"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_version">Version</label>
+          <input type="text" class="form-control" name="version" id="field_version" data-cy="version" formControlName="version" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_storageCode">Storage Code</label>
+          <input
+            type="text"
+            class="form-control"
+            name="storageCode"
+            id="field_storageCode"
+            data-cy="storageCode"
+            formControlName="storageCode"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_totalQuantity">Total Quantity</label>
+          <input
+            type="text"
+            class="form-control"
+            name="totalQuantity"
+            id="field_totalQuantity"
+            data-cy="totalQuantity"
+            formControlName="totalQuantity"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_createBy">Create By</label>
+          <input type="text" class="form-control" name="createBy" id="field_createBy" data-cy="createBy" formControlName="createBy" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_entryTime">Entry Time</label>
+          <input type="text" class="form-control" name="entryTime" id="field_entryTime" data-cy="entryTime" formControlName="entryTime" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_trangThai">Trang Thai</label>
+          <input type="text" class="form-control" name="trangThai" id="field_trangThai" data-cy="trangThai" formControlName="trangThai" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_comment">Comment</label>
+          <input type="text" class="form-control" name="comment" id="field_comment" data-cy="comment" formControlName="comment" />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
