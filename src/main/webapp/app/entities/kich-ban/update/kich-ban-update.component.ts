@@ -43,6 +43,12 @@ export class KichBanUpdateComponent implements OnInit {
   predicate!: string;
   ascending!: boolean;
 
+  dropdownList: IKichBan[] = [];
+  @Input() selectedItems: { maThietBi: string }[] = [];
+  dropdownSettings = {};
+
+  onSelectItemRequest: string[] = [];
+
   account: Account | null = null;
 
   public showSuccessPopupService = false;
@@ -131,8 +137,15 @@ export class KichBanUpdateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.accountService.identity().subscribe(account=>{this.account = account});
+    this.accountService.identity().subscribe(account => {
+      this.account = account;
+    });
     this.activatedRoute.data.subscribe(({ kichBan }) => {
+      this.getAllThongSo();
+      this.getAllThietBi();
+      this.getAllNhomThietBi();
+      this.getAllDonVi();
+      this.getAllKichBan();
       if (kichBan.id === undefined) {
         const today = dayjs().startOf('day');
         kichBan.ngayTao = today;
@@ -145,18 +158,54 @@ export class KichBanUpdateComponent implements OnInit {
           for (let i = 0; i < this.listOfChiTietKichBan.length; i++) {
             this.listOfChiTietKichBan[i].idKichBan = kichBan.id;
           }
-          console.log('thong so kich ban:', this.listOfChiTietKichBan);
-          // console.log("id kich ban:",kichBan.id)
         });
+        // lay danh sach ma thiet bi theo kichban.loaithietbi
+        for (let i = 0; i < this.listNhomThietBi.length; i++) {
+          if (kichBan.loaiThietBi === this.listNhomThietBi[i].loaiThietBi) {
+            const items = { maThietBi: this.listNhomThietBi[i].maThietBi };
+            this.listMaThietBi.push(items);
+          }
+        }
+        console.log('maTB:', this.listMaThietBi);
+        console.log('maTB2222:', this.listNhomThietBi);
       }
-      this.getAllThongSo();
-      this.getAllThietBi();
+      // gan gia tri cho onselectItemRequest
+      console.log((this.onSelectItemRequest = kichBan.maThietBi.split(',')));
+      // gán vào selectItem
+      for (let i = 0; i < this.onSelectItemRequest.length; i++) {
+        // tạo 1 biến chứa value tại vị trí i
+        const item: { maThietBi: string } = { maThietBi: this.onSelectItemRequest[i] };
+        this.selectedItems.push(item);
+      }
+      console.log(this.selectedItems);
+      console.log('thong so kich ban:', this.listOfChiTietKichBan);
+      console.log('ma thiet bi: ', this.editForm.get(['maThietBi'])!.value);
       this.updateForm(kichBan);
-      this.getAllNhomThietBi();
-      this.getAllDonVi();
-      this.getAllKichBan();
     });
+
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'maThietBi',
+      textField: 'maThietBi',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+    };
   }
+  //
+  onItemSelect(item: any): void {
+    // tao item1 va gan value = item
+    const item1: { maThietBi: string } = item;
+    this.selectedItems.push(item1);
+    this.onSelectItemRequest.push(item1.maThietBi);
+    console.log(this.selectedItems);
+    console.log(this.onSelectItemRequest);
+  }
+  onSelectAll(items: any): void {
+    console.log(items);
+  }
+
   //==================================================== Lấy danh sách =================================================
   getAllThongSo(): void {
     this.http.get<IQuanLyThongSo>(this.listThongSoUrl).subscribe(res => {
@@ -191,7 +240,7 @@ export class KichBanUpdateComponent implements OnInit {
           continue;
         }
       }
-      // console.log('loai thiet bi:', this.listLoaiThietBi);
+      console.log('loai thiet bi:', this.listNhomThietBi);
     });
   }
   getAllDonVi(): void {
@@ -302,6 +351,7 @@ export class KichBanUpdateComponent implements OnInit {
         // alert('Tạo mới kịch bản thành công');
         this.showSuccessPopupService = false;
         this.subscribeToCreateResponse(this.kichBanService.create(kichBan));
+        console.log('kb', kichBan);
       }
     }
     // console.log('chi tiet kich ban:', this.listOfChiTietKichBan);
@@ -430,7 +480,7 @@ export class KichBanUpdateComponent implements OnInit {
       ...new KichBan(),
       id: this.editForm.get(['id'])!.value,
       maKichBan: this.editForm.get(['maKichBan'])!.value,
-      maThietBi: this.maThietBi,
+      maThietBi: this.onSelectItemRequest.toString(),
       loaiThietBi: this.editForm.get(['loaiThietBi'])!.value,
       dayChuyen: this.dayChuyen,
       maSanPham: this.maSanPham,
