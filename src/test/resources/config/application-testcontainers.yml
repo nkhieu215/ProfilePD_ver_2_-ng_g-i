@@ -14,10 +14,10 @@
 spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
-    url: jdbc:tc:sqlserver:2019-CU15-ubuntu-20.04://;database=Jhipster?TC_TMPFS=/testtmpfs:rw
+#    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+    url: jdbc:sqlserver://localhost;database=ProfileProductions;encrypt=true;trustServerCertificate=true;
     username: SA
-    password: yourStrong(!)Password
+    password: 123456
     hikari:
       poolName: Hikari
       auto-commit: false

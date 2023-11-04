@@ -46,7 +46,7 @@ management:
   endpoint:
     health:
       show-details: when_authorized
-      roles: 'ROLE_ADMIN'
+      roles: 'ROLE_ADMIN_PROFILE'
       probes:
         enabled: true
       group:

@@ -5,9 +5,9 @@ package com.mycompany.myapp.security;
  */
 public final class AuthoritiesConstants {
 
-    public static final String ADMIN = "ROLE_ADMIN";
+    public static final String ADMIN = "ROLE_ADMIN_PROFILE";
 
-    public static final String USER = "";
+    public static final String USER = "ROLE_USER_PROFILE";
 
     public static final String ANONYMOUS = "ROLE_ANONYMOUS";
 

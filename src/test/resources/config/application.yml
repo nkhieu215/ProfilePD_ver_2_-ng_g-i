@@ -19,11 +19,11 @@ spring:
 
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:h2:mem:jhipster;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    name:
-    username:
-    password:
+    url: jdbc:sqlserver://192.168.18.113:1433;database=ProfileProductions;encrypt=true;trustServerCertificate=true;
+    username: SA
+    password: 123456
     hikari:
+#      dang đổi trạng thái  false -> true của autocommit
       auto-commit: false
   jackson:
     serialization:
@@ -32,20 +32,37 @@ spring:
     database-platform: tech.jhipster.domain.util.FixedH2Dialect
     open-in-view: false
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
       naming:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
         implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
     properties:
+      hibernate.jdbc.time_zone: UTC
       hibernate.id.new_generator_mappings: true
       hibernate.connection.provider_disables_autocommit: true
       hibernate.cache.use_second_level_cache: false
       hibernate.cache.use_query_cache: false
       hibernate.generate_statistics: false
-      hibernate.hbm2ddl.auto: validate
-      hibernate.jdbc.time_zone: UTC
+      # modify batch size as necessary
+      hibernate.jdbc.batch_size: 25
+      hibernate.order_inserts: true
+      hibernate.order_updates: true
+      # modify fetch size as necessary
+      hibernate.jdbc.fetch_size: 150
+      hibernate.criteria.literal_handling_mode: BIND
       hibernate.query.fail_on_pagination_over_collection_fetch: true
+      hibernate.query.in_clause_parameter_padding: true
+#      hibernate.id.new_generator_mappings: true
+##      dang đổi trạng thái true -> false của disables_autocommit
+#      hibernate.connection.provider_disables_autocommit: true
+#      hibernate.cache.use_second_level_cache: false
+#      hibernate.cache.use_query_cache: false
+#      hibernate.generate_statistics: false
+#      hibernate.hbm2ddl.auto: validate
+#      hibernate.jdbc.time_zone: UTC
+#      hibernate.query.fail_on_pagination_over_collection_fetch: true
   liquibase:
+    enabled: false
     contexts: test
   mail:
     host: localhost
@@ -75,10 +92,10 @@ spring:
       client:
         provider:
           oidc:
-            issuer-uri: http://DO_NOT_CALL:8080/auth/realms/jhipster
+            issuer-uri: http://192.168.18.113:8080/auth/realms/jhipster
 
 server:
-  port: 10344
+  port: 10024
   address: localhost
 
 # ===================================================================

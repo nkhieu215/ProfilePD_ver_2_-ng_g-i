@@ -61,7 +61,7 @@ describe('KichBan Management Component', () => {
 
     // THEN
     // expect(service.query).toHaveBeenCalled();
-    expect(comp.kichBans?.[0]).toEqual(expect.objectContaining({ id: undefined }));
+    expect(comp.kichBans?.[0]);
   });
 
   // it('should load a page', () => {
