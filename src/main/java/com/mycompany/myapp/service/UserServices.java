@@ -245,13 +245,13 @@ public class UserServices {
         return entities;
     }
 
-    //☺ xem danh sách thông số thiết bị bằng loại thiết bị
+    //☺ xem danh sách thông số thiết bị bằng Nhóm thiết bị
     public List<ThongSoMay> getDanhSachThongSoThietBiByLoaiThietBi(String loaiThietBi) {
         List<ThongSoMay> entities = thongSoMayRepository.findAllByLoaiThietBi(loaiThietBi);
         return entities;
     }
 
-    //☺ xem danh sách thông số thiết bị bằng loại thiết bị
+    //☺ xem danh sách thông số thiết bị bằng Nhóm thiết bị
     public List<ThongSoMay> getDanhSachThongSoThietBiByLoaiThietBiAndMaThietBi(ThongSoMay request) {
         List<ThongSoMay> entities = thongSoMayRepository.findAllByLoaiThietBiAndMaThietBi(request.getLoaiThietBi(), request.getMaThietBi());
         return entities;
@@ -585,7 +585,8 @@ public class UserServices {
 
     //? xem chi tiet noi dung 1 kich ban san xuat hang ngay
     public SanXuatHangNgay chiTietSanXuat(Long maKichBan) {
-        SanXuatHangNgay entity = sanXuatHangNgayRepository.findById(maKichBan).orElse(null);log.info("thanh cong");
+        SanXuatHangNgay entity = sanXuatHangNgayRepository.findById(maKichBan).orElse(null);
+        log.info("thanh cong");
         return entity;
     }
 
@@ -632,7 +633,7 @@ public class UserServices {
     }
 
     //------------------------------------------------------ *  --------------------------------------------------------
-    //------------------------------------------------ Loại thiết bị ---------------------------------------------------
+    //------------------------------------------------ Nhóm thiết bị ---------------------------------------------------
     public List<NhomThietBi> getAllNhomThietBi() {
         List<NhomThietBi> nhomThietBis = this.nhomThietBiRepository.findAll();
         return nhomThietBis;

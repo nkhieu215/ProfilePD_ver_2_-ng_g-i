@@ -10,7 +10,8 @@ table {
 }
 
 th {
-  background-color: #f2f2f2;
+  color: #fff;
+  background-color: #6c7ae0;
   text-align: left;
   padding: 8px;
   font-weight: bold;
@@ -36,7 +37,7 @@ td {
 .create-thiet-bi {
   border: none !important;
   color: #fff;
-  background-color: #0D6EFD;
+  background-color: #0d6efd;
 }
 
 .btn-primary {
@@ -55,7 +56,7 @@ td {
   color: #fff;
 }
 
-th[scope="col"] {
+th[scope='col'] {
   position: relative;
 }
 
@@ -120,12 +121,10 @@ ul.search-result {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-
 }
 
 .btn-refresh:hover {
   background-color: #138496;
-
 }
 
 .btn-add-new {

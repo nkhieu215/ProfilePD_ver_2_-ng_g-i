@@ -12,10 +12,10 @@
             <th scope="col" jhiSortBy="loaiThietBi">
               <span>Nhóm thiết bị<span style="color: red"> *</span></span>
             </th>
-            <th scope="col" jhiSortBy="dayChuyen"><span>Mã thiết bị- Mã máy</span></th>
+            <th scope="col" jhiSortBy="maThietBi"><span>Mã thiết bị- Mã máy</span></th>
             <th scope="col" jhiSortBy="dayChuyen"><span>Dây chuyền</span></th>
-            <th scope="col" jhiSortBy="trangThai"><span>Nhóm sản phẩm</span></th>
-            <th scope="col" jhiSortBy="trangThai"><span>Version sản phẩm</span></th>
+            <th scope="col" jhiSortBy="nhomSanPham"><span>Nhóm sản phẩm</span></th>
+            <th scope="col" jhiSortBy="versionSanPham"><span>Version sản phẩm</span></th>
             <th scope="col" jhiSortBy="trangThai"><span>Trạng thái</span></th>
           </tr>
         </thead>
@@ -38,7 +38,7 @@
               </datalist> -->
 
               <ng-multiselect-dropdown
-                [placeholder]="''"
+                [placeholder]="'Search'"
                 [settings]="dropdownSettings"
                 [data]="listMaThietBi"
                 [(ngModel)]="selectedItems"

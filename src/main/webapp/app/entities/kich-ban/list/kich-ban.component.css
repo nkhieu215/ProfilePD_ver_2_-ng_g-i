@@ -55,6 +55,11 @@ td {
   color: #fff;
 }
 
+.btn-sm {
+  border-top-right-radius: 5px !important;
+  border-bottom-right-radius: 5px !important;
+}
+
 th[scope='col'] {
   position: relative;
 }
@@ -76,7 +81,7 @@ select {
 }
 
 .loaiThietBi-col {
-  width: 5rem;
+  width: 6rem;
 }
 
 .version-col,
@@ -147,8 +152,8 @@ ul.search-result {
   background-color: #6c7ae0;
   font-weight: bold;
   padding: 10px;
-  text-align: center;
-  align-items: center;
+  /* text-align: center; */
+  /* align-items: center; */
 }
 
 .table-sxhn {

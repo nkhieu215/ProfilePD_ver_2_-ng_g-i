@@ -46,10 +46,10 @@ export class KichBanDetailComponent implements OnInit {
     if (this.kichBans && this.chiTietKichBans) {
       // const exportDataKB = this.kichBans.map(res => ({
       //   'Mã kịch bản': res.maKichBan,
-      //   'Loại thiết bị': res.maThietBi,
+      //   'Nhóm thiết bị': res.maThietBi,
       //   'Mã thiết bị': res.loaiThietBi,
       //   'Dây chuyền': res.dayChuyen,
-      //   'Mã sản phẩm': res.maSanPham,
+      //   'Nhóm sản phẩm': res.maSanPham,
       //   'Version sản phẩm': res.versionSanPham,
       //   'Ngày tạo': res.ngayTao,
       //   'Ngày cập nhật': res.timeUpdate,

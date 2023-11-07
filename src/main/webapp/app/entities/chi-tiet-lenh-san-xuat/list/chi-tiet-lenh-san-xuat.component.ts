@@ -1,5 +1,8 @@
+import { ILenhSanXuat } from 'app/entities/lenh-san-xuat/lenh-san-xuat.model';
+import { FormBuilder } from '@angular/forms';
+import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { Component, OnInit } from '@angular/core';
-import { HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpHeaders, HttpResponse, HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -15,6 +18,21 @@ import { ChiTietLenhSanXuatDeleteDialogComponent } from '../delete/chi-tiet-lenh
   templateUrl: './chi-tiet-lenh-san-xuat.component.html',
 })
 export class ChiTietLenhSanXuatComponent implements OnInit {
+  resourceUrlApprove = this.applicationConfigService.getEndpointFor('api/quan-ly-phe-duyet');
+
+  formSearch = this.formBuilder.group({
+    maLenhSanXuat: '',
+    sapCode: '',
+    sapName: '',
+    workOrderCode: '',
+    version: '',
+    storageCode: '',
+    createBy: '',
+    trangThai: '',
+  });
+
+  lenhSanXuats?: ILenhSanXuat[];
+
   chiTietLenhSanXuats?: IChiTietLenhSanXuat[];
   isLoading = false;
   totalItems = 0;
@@ -28,7 +46,10 @@ export class ChiTietLenhSanXuatComponent implements OnInit {
     protected chiTietLenhSanXuatService: ChiTietLenhSanXuatService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected applicationConfigService: ApplicationConfigService,
+    protected formBuilder: FormBuilder,
+    protected http: HttpClient
   ) {}
 
   loadPage(page?: number, dontNavigate?: boolean): void {
@@ -57,7 +78,15 @@ export class ChiTietLenhSanXuatComponent implements OnInit {
     this.handleNavigation();
   }
 
-  trackId(_index: number, item: IChiTietLenhSanXuat): number {
+  getLenhSanXuatList(): void {
+    this.http.get<any>(this.resourceUrlApprove).subscribe(res => {
+      this.lenhSanXuats = res;
+      console.log(this.resourceUrlApprove);
+      console.log(res);
+    });
+  }
+
+  trackId(_index: number, item: ILenhSanXuat): number {
     return item.id!;
   }
 
@@ -72,7 +101,20 @@ export class ChiTietLenhSanXuatComponent implements OnInit {
     });
   }
 
-  protected sort(): string[] {
+  timKiemTem(data: any, page?: number, dontNavigate?: boolean): void {
+    const pageToLoad: number = page ?? this.page ?? 1;
+
+    this.lenhSanXuats = [];
+
+    this.http.post<any>(this.resourceUrlApprove, data).subscribe(res => {
+      this.lenhSanXuats = res;
+      console.log(res);
+      console.log(this.resourceUrlApprove);
+      this.onSuccess(res.lenhSanXuats, res.headers, pageToLoad, !dontNavigate);
+    });
+  }
+
+  sort(): string[] {
     const result = [this.predicate + ',' + (this.ascending ? ASC : DESC)];
     if (this.predicate !== 'id') {
       result.push('id');
@@ -80,7 +122,7 @@ export class ChiTietLenhSanXuatComponent implements OnInit {
     return result;
   }
 
-  protected handleNavigation(): void {
+  handleNavigation(): void {
     combineLatest([this.activatedRoute.data, this.activatedRoute.queryParamMap]).subscribe(([data, params]) => {
       const page = params.get('page');
       const pageNumber = +(page ?? 1);
@@ -95,7 +137,7 @@ export class ChiTietLenhSanXuatComponent implements OnInit {
     });
   }
 
-  protected onSuccess(data: IChiTietLenhSanXuat[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
+  onSuccess(data: IChiTietLenhSanXuat[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
     if (navigate) {
@@ -111,7 +153,7 @@ export class ChiTietLenhSanXuatComponent implements OnInit {
     this.ngbPaginationPage = this.page;
   }
 
-  protected onError(): void {
+  onError(): void {
     this.ngbPaginationPage = this.page ?? 1;
   }
 }

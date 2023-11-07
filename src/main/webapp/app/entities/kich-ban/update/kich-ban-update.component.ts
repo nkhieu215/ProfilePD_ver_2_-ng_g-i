@@ -82,7 +82,7 @@ export class KichBanUpdateComponent implements OnInit {
   listOfThietBi: IThietBi[] = [];
   listNhomThietBi: { loaiThietBi: string; maThietBi: string; dayChuyen: string }[] = [];
   listDonVi: { donVi: string }[] = [];
-  // ------------------ lưu tìm kiếm theo loại thiết bị ---------------
+  // ------------------ lưu tìm kiếm theo Nhóm thiết bị ---------------
   listMaThietBi: { maThietBi: string }[] = [];
   listLoaiThietBi: { loaiThietBi: string }[] = [];
   listKichBan: IKichBan[] = [];
@@ -100,6 +100,7 @@ export class KichBanUpdateComponent implements OnInit {
     donVi: string;
     phanLoai: string | null | undefined;
   }[] = [];
+
   editForm = this.fb.group({
     id: [],
     maKichBan: [],
@@ -147,6 +148,7 @@ export class KichBanUpdateComponent implements OnInit {
       this.getAllDonVi();
       this.getAllKichBan();
       if (kichBan.id === undefined) {
+        this.editForm.patchValue({ id: undefined });
         const today = dayjs().startOf('day');
         kichBan.ngayTao = today;
         kichBan.timeUpdate = today;
@@ -179,7 +181,8 @@ export class KichBanUpdateComponent implements OnInit {
       }
       console.log(this.selectedItems);
       console.log('thong so kich ban:', this.listOfChiTietKichBan);
-      console.log('ma thiet bi: ', this.editForm.get(['maThietBi'])!.value);
+      // console.log('ma thiet bi: ', this.editForm.get(['maThietBi'])!.value);
+      console.log('ma thiet bi', this.listMaThietBi);
       this.updateForm(kichBan);
     });
 
@@ -250,7 +253,7 @@ export class KichBanUpdateComponent implements OnInit {
     });
   }
   getMaThietBi(): void {
-    //---------------------------------- Set thông tin tương ứng theo loại thiết bị-----------------------------
+    //---------------------------------- Set thông tin tương ứng theo Nhóm thiết bị-----------------------------
     this.listMaThietBi = [];
     for (let i = 0; i < this.listNhomThietBi.length; i++) {
       if (this.editForm.get(['loaiThietBi'])!.value === this.listNhomThietBi[i].loaiThietBi) {
@@ -258,7 +261,8 @@ export class KichBanUpdateComponent implements OnInit {
         this.listMaThietBi.push(items);
       }
     }
-    // console.log('ma thiet bi:', this.listMaThietBi);
+    this.getThietBi();
+    console.log('ma thiet bi:', this.listMaThietBi);
   }
   getAllDayChuyen(): void {
     this.http.get<any>(this.listDayChuyenUrl).subscribe(res => {
@@ -268,7 +272,6 @@ export class KichBanUpdateComponent implements OnInit {
   }
   //------------------------------ lay thong tin thiet bi thong qua loai thiet bi ------------------------------
   getThietBi(): void {
-    this.listMaThietBi = [];
     this.listOfChiTietKichBan = [];
     const timKiem = {
       maThietBi: this.editForm.get(['maThietBi'])!.value,
@@ -306,8 +309,8 @@ export class KichBanUpdateComponent implements OnInit {
         };
         this.listOfChiTietKichBan.push(newRows);
       }
-      // console.log('thiet bi: ', this.listOfChiTietKichBan);
-      // console.log('tim kiem: ', timKiem);
+      console.log('thiet bi: ', this.listOfChiTietKichBan);
+      console.log('tim kiem: ', timKiem);
     });
     //set dây chuyền tương ứng theo mã thiết bị
     for (let i = 0; i < this.listNhomThietBi.length; i++) {
@@ -354,36 +357,29 @@ export class KichBanUpdateComponent implements OnInit {
         console.log('kb', kichBan);
       }
     }
-    // console.log('chi tiet kich ban:', this.listOfChiTietKichBan);
+    console.log('id kich ban', kichBan.id);
+    console.log('chi tiet kich ban:', this.listOfChiTietKichBan);
   }
 
   //---------------------------- luu thong so kich ban chi tiet ---------------------------
   saveChiTietKichBan(): void {
     if (this.listOfChiTietKichBan[1].idKichBan === 0) {
       // ------------ cập nhật kich_ban_id trong table chi tiết kịch bản -------------
-      for (let i = 0; i < this.listOfChiTietKichBan.length; i++) {
-        this.listOfChiTietKichBan[i].idKichBan = this.idKichBan;
-        this.listOfChiTietKichBan[i].maKichBan = this.maKichBan;
-      }
-      this.http.post<any>(this.chiTietKichBanUrl, this.listOfChiTietKichBan).subscribe(() => {
-        this.previousState();
-      });
+      this.previousState();
     } else {
-      this.http.put<any>(this.putChiTietKichBanUrl, this.listOfChiTietKichBan).subscribe(() => {
-        console.log('cap nhat', this.listOfChiTietKichBan);
-        this.previousState();
-      });
+      console.log('cap nhat', this.listOfChiTietKichBan);
+      this.previousState();
     }
   }
   // lấy id kịch bản
   subscribeToCreateResponse(result: Observable<HttpResponse<IKichBan>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe(res => {
-      // console.log(res.body);
+      console.log(res.body);
       // gán id kịch bản, mã kịch bản vào list chi tiết kịch bản request
       this.idKichBan = res.body?.id as any;
       this.maKichBan = res.body?.maKichBan as any;
-      // console.log('gan id kich ban: ', this.idKichBan);
-      // console.log('gan ma kich ban: ', this.maKichBan);
+      console.log('gan id kich ban: ', this.idKichBan);
+      console.log('gan ma kich ban: ', this.maKichBan);
     });
   }
   subscribeToSaveResponse(result: Observable<HttpResponse<IKichBan>>): void {
@@ -406,6 +402,7 @@ export class KichBanUpdateComponent implements OnInit {
   }
 
   openSuccessPopupService(): void {
+    console.log('aaa', this.editForm.get(['id'])!.value);
     if (this.editForm.get(['id'])!.value !== undefined) {
       this.result = 'Cập nhật kịch bản thành công';
       this.showSuccessPopupService = true;
@@ -434,8 +431,8 @@ export class KichBanUpdateComponent implements OnInit {
 
   openSuccessPopup(): void {
     this.showSuccessPopup = true;
-    console.log('popup', this.listOfChiTietKichBan[1].idKichBan === 0);
-    if (this.listOfChiTietKichBan[1].idKichBan === 0) {
+    console.log('idkb', this.listOfChiTietKichBan[1].idKichBan);
+    if (this.listOfChiTietKichBan[1].idKichBan === undefined) {
       for (let i = 0; i < this.listOfChiTietKichBan.length; i++) {
         this.listOfChiTietKichBan[i].idKichBan = this.idKichBan;
         this.listOfChiTietKichBan[i].maKichBan = this.maKichBan;

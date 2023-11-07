@@ -55,6 +55,11 @@ td {
   color: #fff;
 }
 
+.btn-sm {
+  border-top-right-radius: 5px !important;
+  border-bottom-right-radius: 5px !important;
+}
+
 th[scope='col'] {
   position: relative;
 }

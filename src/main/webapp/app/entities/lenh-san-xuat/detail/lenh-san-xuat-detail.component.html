@@ -22,58 +22,57 @@
         </thead>
         <tbody>
           <td>
-            <span>{{lenhSanXuat.maLenhSanXuat}}</span>
+            <span>{{ lenhSanXuat.maLenhSanXuat }}</span>
           </td>
 
           <td>
-            <span>{{lenhSanXuat.sapCode}}</span>
+            <span>{{ lenhSanXuat.sapCode }}</span>
           </td>
 
           <td>
-            <span>{{lenhSanXuat.sapName}}</span>
+            <span>{{ lenhSanXuat.sapName }}</span>
           </td>
 
           <td>
-            <span>{{lenhSanXuat.workOrderCode}}</span>
+            <span>{{ lenhSanXuat.workOrderCode }}</span>
           </td>
 
           <td>
-            <span>{{lenhSanXuat.version}}</span>
+            <span>{{ lenhSanXuat.version }}</span>
           </td>
 
           <td>
-            <span>{{lenhSanXuat.storageCode}}</span>
+            <span>{{ lenhSanXuat.storageCode }}</span>
           </td>
 
           <td>
-            <span>{{lenhSanXuat.totalQuantity}}</span>
+            <span>{{ lenhSanXuat.totalQuantity }}</span>
           </td>
 
           <td>
-            <span>{{lenhSanXuat.createBy}}</span>
+            <span>{{ lenhSanXuat.createBy }}</span>
           </td>
 
           <td>
-            <span>{{lenhSanXuat.entryTime}}</span>
+            <span>{{ lenhSanXuat.entryTime }}</span>
           </td>
 
           <td>
-            <span>{{lenhSanXuat.trangThai}}</span>
+            <span>{{ lenhSanXuat.trangThai }}</span>
           </td>
 
           <td>
-            <span>{{lenhSanXuat.comment}}</span>
+            <span>{{ lenhSanXuat.comment }}</span>
           </td>
-
         </tbody>
       </table>
-      <br>
-      <br>
-      <br>
-      <br>
+      <br />
+      <br />
+      <br />
+      <br />
 
       <h2>Thông tin tem</h2>
-      <hr>
+      <hr />
       <table class="table table-striped" aria-describedby="page-heading">
         <thead>
           <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending">
@@ -114,108 +113,105 @@
 
         <tbody *ngFor="let data of chiTietLenhSanXuats; let i = index">
           <td>
-            <span>{{i+1}}</span>
-          </td>
-  
-          <td>
-            <span>{{data.reelID}}</span>
+            <span>{{ i + 1 }}</span>
           </td>
 
           <td>
-            <span>{{data.partNumber}}</span>
-          </td>
-          <td>
-            <span>{{data.vendor}}</span>
-          </td>
-          <td>
-            <span>{{data.lot}}</span>
-          </td>
-          <td>
-            <span>{{data.userData1}}</span>
-          </td>
-          <td>
-            <span>{{data.userData2}}</span>
-          </td>
-          <td>
-            <span>{{data.userData3}}</span>
-          </td>
-          <td>
-            <span>{{data.userData4}}</span>
-          </td>
-          <td>
-            <span>{{data.userData5}}</span>
-          </td>
-          <td>
-            <span>{{data.initialQuantity}}</span>
-          </td>
-          <td>
-            <span>{{data.msdLevel}}</span>
-          </td>
-          <td>
-            <span>{{data.msdInitialFloorTime}}</span>
-          </td>
-          <td>
-            <span>{{data.msdBagSealDate}}</span>
-          </td>
-          <td>
-            <span>{{data.marketUsage}}</span>
-          </td>
-          <td>
-            <span>{{data.quantityOverride}}</span>
-          </td>
-          <td>
-            <span>{{data.shelfTime}}</span>
-          </td>
-          <td>
-            <span>{{data.spMaterialName}}</span>
-          </td>
-          <td>
-            <span>{{data.warningLimit}}</span>
-          </td>
-          <td>
-            <span>{{data.maximumLimit}}</span>
-          </td>
-          <td>
-            <span>{{data.comments}}</span>
-          </td>
-          <td>
-            <span>{{data.warmupTime}}</span>
-          </td>
-          <td>
-            <span>{{data.storageUnit}}</span>
-          </td>
-          <td>
-            <span>{{data.subStorageUnit}}</span>
-          </td>
-          <td>
-            <span>{{data.locationOverride}}</span>
-          </td>
-          <td>
-            <span>{{data.expirationDate}}</span>
-          </td>
-          <td>
-            <span>{{data.manufacturingDate}}</span>
-          </td>
-          <td>
-            <span>{{data.partClass}}</span>
-          </td>
-          <td>
-            <span>{{data.sapCode}}</span>
-          </td>
-          <td>
-            <span>{{data.trangThai}}</span>
-          </td>
-          <td>
-            <span>{{data.checked}}</span>
+            <span>{{ data.reelID }}</span>
           </td>
 
+          <td>
+            <span>{{ data.partNumber }}</span>
+          </td>
+          <td>
+            <span>{{ data.vendor }}</span>
+          </td>
+          <td>
+            <span>{{ data.lot }}</span>
+          </td>
+          <td>
+            <span>{{ data.userData1 }}</span>
+          </td>
+          <td>
+            <span>{{ data.userData2 }}</span>
+          </td>
+          <td>
+            <span>{{ data.userData3 }}</span>
+          </td>
+          <td>
+            <span>{{ data.userData4 }}</span>
+          </td>
+          <td>
+            <span>{{ data.userData5 }}</span>
+          </td>
+          <td>
+            <span>{{ data.initialQuantity }}</span>
+          </td>
+          <td>
+            <span>{{ data.msdLevel }}</span>
+          </td>
+          <td>
+            <span>{{ data.msdInitialFloorTime }}</span>
+          </td>
+          <td>
+            <span>{{ data.msdBagSealDate }}</span>
+          </td>
+          <td>
+            <span>{{ data.marketUsage }}</span>
+          </td>
+          <td>
+            <span>{{ data.quantityOverride }}</span>
+          </td>
+          <td>
+            <span>{{ data.shelfTime }}</span>
+          </td>
+          <td>
+            <span>{{ data.spMaterialName }}</span>
+          </td>
+          <td>
+            <span>{{ data.warningLimit }}</span>
+          </td>
+          <td>
+            <span>{{ data.maximumLimit }}</span>
+          </td>
+          <td>
+            <span>{{ data.comments }}</span>
+          </td>
+          <td>
+            <span>{{ data.warmupTime }}</span>
+          </td>
+          <td>
+            <span>{{ data.storageUnit }}</span>
+          </td>
+          <td>
+            <span>{{ data.subStorageUnit }}</span>
+          </td>
+          <td>
+            <span>{{ data.locationOverride }}</span>
+          </td>
+          <td>
+            <span>{{ data.expirationDate }}</span>
+          </td>
+          <td>
+            <span>{{ data.manufacturingDate }}</span>
+          </td>
+          <td>
+            <span>{{ data.partClass }}</span>
+          </td>
+          <td>
+            <span>{{ data.sapCode }}</span>
+          </td>
+          <td>
+            <span>{{ data.trangThai }}</span>
+          </td>
+          <td>
+            <span>{{ data.checked }}</span>
+          </td>
         </tbody>
-
-
       </table>
-      
-      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Trở lại</span>
+
+      <button type="button" [routerLink]="['/lenh-san-xuat', lenhSanXuat.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Gửi phê duyệt</span>
       </button>
 
       <button type="button" [routerLink]="['/lenh-san-xuat', lenhSanXuat.id, 'edit']" class="btn btn-primary">
@@ -226,8 +222,8 @@
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Lưu</span>
       </button>
 
-      <button type="button" [routerLink]="['/lenh-san-xuat', lenhSanXuat.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Gửi phê duyệt</span>
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Trở lại</span>
       </button>
     </div>
   </div>

@@ -19,11 +19,11 @@ spring:
 
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:sqlserver://192.168.18.113:1433;database=ProfileProductions;encrypt=true;trustServerCertificate=true;
+    url: jdbc:sqlserver://localhost;database=ProfileProductions;encrypt=true;trustServerCertificate=true;
     username: SA
     password: 123456
     hikari:
-#      dang đổi trạng thái  false -> true của autocommit
+      #      dang đổi trạng thái  false -> true của autocommit
       auto-commit: false
   jackson:
     serialization:
@@ -52,15 +52,15 @@ spring:
       hibernate.criteria.literal_handling_mode: BIND
       hibernate.query.fail_on_pagination_over_collection_fetch: true
       hibernate.query.in_clause_parameter_padding: true
-#      hibernate.id.new_generator_mappings: true
-##      dang đổi trạng thái true -> false của disables_autocommit
-#      hibernate.connection.provider_disables_autocommit: true
-#      hibernate.cache.use_second_level_cache: false
-#      hibernate.cache.use_query_cache: false
-#      hibernate.generate_statistics: false
-#      hibernate.hbm2ddl.auto: validate
-#      hibernate.jdbc.time_zone: UTC
-#      hibernate.query.fail_on_pagination_over_collection_fetch: true
+  #      hibernate.id.new_generator_mappings: true
+  ##      dang đổi trạng thái true -> false của disables_autocommit
+  #      hibernate.connection.provider_disables_autocommit: true
+  #      hibernate.cache.use_second_level_cache: false
+  #      hibernate.cache.use_query_cache: false
+  #      hibernate.generate_statistics: false
+  #      hibernate.hbm2ddl.auto: validate
+  #      hibernate.jdbc.time_zone: UTC
+  #      hibernate.query.fail_on_pagination_over_collection_fetch: true
   liquibase:
     enabled: false
     contexts: test
@@ -92,7 +92,7 @@ spring:
       client:
         provider:
           oidc:
-            issuer-uri: http://192.168.18.113:8080/auth/realms/jhipster
+            issuer-uri: http://localhost:8080/auth/realms/jhipster
 
 server:
   port: 10024

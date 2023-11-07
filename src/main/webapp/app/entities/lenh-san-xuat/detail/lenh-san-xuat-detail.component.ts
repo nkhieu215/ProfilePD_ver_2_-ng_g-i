@@ -9,6 +9,7 @@ import { ILenhSanXuat } from '../lenh-san-xuat.model';
 @Component({
   selector: 'jhi-lenh-san-xuat-detail',
   templateUrl: './lenh-san-xuat-detail.component.html',
+  styleUrls: ['./lenh-san-xuat-detail.component.css'],
 })
 export class LenhSanXuatDetailComponent implements OnInit {
   resourceUrl = this.applicationConfigService.getEndpointFor('/api/chi-tiet-lenh-san-xuats');
@@ -20,7 +21,8 @@ export class LenhSanXuatDetailComponent implements OnInit {
   constructor(
     protected activatedRoute: ActivatedRoute,
     protected applicationConfigService: ApplicationConfigService,
-    protected http: HttpClient) { }
+    protected http: HttpClient
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ lenhSanXuat }) => {
@@ -30,8 +32,8 @@ export class LenhSanXuatDetailComponent implements OnInit {
       this.http.get<any>(`${this.resourceUrl}/${this.lenhSanXuat.id}`).subscribe(res => {
         this.chiTietLenhSanXuats = res;
         console.log('res', res);
-        console.log('lenhSanXuat', this.chiTietLenhSanXuats)
-      })
+        console.log('lenhSanXuat', this.chiTietLenhSanXuats);
+      });
     }
   }
 

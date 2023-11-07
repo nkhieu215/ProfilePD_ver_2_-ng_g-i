@@ -22,7 +22,7 @@ th {
 }
 
 .loaiThietBi-col {
-  width: 5rem;
+  width: 6rem;
 }
 
 .version-col {
@@ -66,6 +66,11 @@ td {
 .btn-danger {
   background-color: #dc3545;
   color: #fff;
+}
+
+.btn-sm {
+  border-top-right-radius: 5px !important;
+  border-bottom-right-radius: 5px !important;
 }
 
 .header-tsm {

@@ -8,7 +8,7 @@
         <span>Refresh List</span>
       </button>
 
-      <button
+      <!-- <button
         id="jh-create-entity"
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-lenh-san-xuat"
@@ -16,7 +16,7 @@
       >
         <fa-icon icon="plus"></fa-icon>
         <span> Create a new Lenh San Xuat </span>
-      </button>
+      </button> -->
     </div>
   </h2>
 
@@ -33,7 +33,7 @@
           <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
             <th scope="col" jhiSortBy="STT">
               <span>STT</span>
-              <input type="text" style="width: 10px; border: none; background-color: #f2f2f2" />
+              <input type="text" style="width: 10px; border: none; background-color: #6c7ae0" />
             </th>
 
             <th scope="col" jhiSortBy="maLenhSanXuat">
@@ -86,7 +86,7 @@
 
             <th scope="col" jhiSortBy="totalQuantity">
               <span>Tổng số lượng nhập</span>
-              <input style="border: none; width: 9rem; background-color: #f2f2f2" />
+              <input style="border: none; width: 9rem; background-color: #6c7ae0" />
             </th>
 
             <th scope="col" jhiSortBy="createBy">
@@ -106,12 +106,12 @@
 
             <th scope="col" jhiSortBy="comment">
               <span>Lưu ý</span>
-              <input style="border: none; width: 3rem; background-color: #f2f2f2" />
+              <input style="border: none; width: 3rem; background-color: #6c7ae0" />
             </th>
 
             <th scope="col">
               <span>Options</span>
-              <input style="border: none; width: 70%; background-color: #f2f2f2" />
+              <input style="border: none; width: 70%; background-color: #6c7ae0" />
             </th>
           </tr>
         </thead>
@@ -155,7 +155,7 @@
 
                 <button type="submit" (click)="delete(lenhSanXuat)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                   <fa-icon icon="times"></fa-icon>
-                  <span class="d-none d-md-inline">Delete</span>
+                  <!-- <span class="d-none d-md-inline">Delete</span> -->
                 </button>
               </div>
             </td>

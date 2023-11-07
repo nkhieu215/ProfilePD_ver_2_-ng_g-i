@@ -37,17 +37,15 @@
               <input type="text" style="width: 10px; border: none; background-color: #6c7ae0" />
             </th>
             <th scope="col" jhiSortBy="loaiThietBi">
-              <!-- ----------------------------- Tìm kiếm theo loại thiết bị ----------------------------->
-              <span>Loại thiết bị</span>
-              <ng-multiselect-dropdown
-                [placeholder]="'Search'"
-                [settings]="dropdownSettings1"
-                [data]="dropdownList1"
-                [(ngModel)]="selectedItems"
-                (onSelect)="onItemSelect($event)"
-                (onSelectAll)="onSelectAll($event)"
-              >
-              </ng-multiselect-dropdown>
+              <!-- ----------------------------- Tìm kiếm theo Nhóm thiết bị ----------------------------->
+              <span>Nhóm thiết bị</span>
+              <input #searchInput type="text" formControlName="loaiThietBi" placeholder="search" list="loaiThietBi" />
+              <!--------------------------- chọn mã thông số ----------------------->
+              <datalist id="loaiThietBi">
+                <option *ngFor="let data of thietBis">
+                  {{ data.loaiThietBi }}
+                </option>
+              </datalist>
             </th>
 
             <th scope="col" jhiSortBy="maThietBi">
@@ -83,7 +81,7 @@
             <th scope="col" jhiSortBy="updateBy">
               <!-- ----------------------------- Tìm kiếm theo người tạo----------------------------->
               <span>Update By</span>
-              <select class="form-control" formControlName="updateBy" style="width: 6em">
+              <select class="form-control form-select" formControlName="updateBy" style="width: 6em">
                 <option value="admin">admin</option>
                 <option value="user">user</option>
               </select>
@@ -92,7 +90,7 @@
             <th scope="col" jhiSortBy="status" style="width: 8em">
               <!-- ----------------------------- Tìm kiếm theo trạng thái----------------------------->
               <span>Trạng thái</span>
-              <select class="form-control" formControlName="status">
+              <select class="form-control form-select" formControlName="status">
                 <option value="active">active</option>
                 <option value="deactive">deactive</option>
               </select>
@@ -153,15 +151,6 @@
       </table>
     </form>
   </div>
-  <ng-multiselect-dropdown
-    [placeholder]="'Chọn danh sách'"
-    [settings]="dropdownSettings1"
-    [data]="dropdownList1"
-    [(ngModel)]="selectedItems"
-    (onSelect)="onItemSelect($event)"
-    (onSelectAll)="onSelectAll($event)"
-  >
-  </ng-multiselect-dropdown>
   <div *ngIf="thietBis && thietBis.length > 0">
     <div>
       <select class="form-select" aria-label="Default select example" [(ngModel)]="itemPerPage">

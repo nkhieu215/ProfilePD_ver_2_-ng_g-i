@@ -2,12 +2,11 @@ package com.mycompany.myapp.web.rest;
 
 import com.mycompany.myapp.domain.*;
 import com.mycompany.myapp.service.UserServices;
+import java.util.List;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 // ! chưa làm được
 // ? Chưa test với front-end
@@ -114,14 +113,14 @@ public class UserController {
         this.userServices.postThongSoMay(requestList);
     }
 
-    //☺ xem danh sách thông số thiết bị bằng loại thiết bị
+    //☺ xem danh sách thông số thiết bị bằng Nhóm thiết bị
     @GetMapping("/thiet-bi/danh-sach-thong-so-thiet-bi/{loaiThietBi}")
     public List<ThongSoMay> getDanhSachThongSoMay(@PathVariable String loaiThietBi) {
         List<ThongSoMay> responseList = this.userServices.getDanhSachThongSoThietBiByLoaiThietBi(loaiThietBi);
         return responseList;
     }
 
-    //☺ xem danh sách thông số thiết bị bằng loại thiết bị và mã thiết bị
+    //☺ xem danh sách thông số thiết bị bằng Nhóm thiết bị và mã thiết bị
     @PostMapping("/thiet-bi/danh-sach-thong-so-thiet-bi")
     public List<ThongSoMay> getDanhSachThongSoMays(@RequestBody ThongSoMay request) {
         List<ThongSoMay> responseList = this.userServices.getDanhSachThongSoThietBiByLoaiThietBiAndMaThietBi(request);
@@ -334,7 +333,7 @@ public class UserController {
     }
 
     //--------------------------- *  ----------------------------------------------------------------
-    //------------------------------------------------ Loại thiết bị ---------------------------------------------------
+    //------------------------------------------------ Nhóm thiết bị ---------------------------------------------------
     @GetMapping("/nhom-thiet-bi")
     public List<NhomThietBi> getAllNhomThietBi() {
         List<NhomThietBi> responseList = this.userServices.getAllNhomThietBi();

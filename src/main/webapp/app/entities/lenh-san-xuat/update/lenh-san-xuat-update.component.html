@@ -1,10 +1,61 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
+<div>
+  <div>
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="jhi-lenh-san-xuat-heading" data-cy="LenhSanXuatCreateUpdateHeading">Create or edit a Lenh San Xuat</h2>
+      <h2 id="jhi-lenh-san-xuat-heading" data-cy="LenhSanXuatCreateUpdateHeading">Thông tin tem sản xuất</h2>
 
-      <div>
-        <jhi-alert-error></jhi-alert-error>
+      <table>
+        <thead>
+          <tr>
+            <th scope="col" jhiSortBy="maLenhSanXuat">
+              <span>Mã lệnh sản xuất</span>
+            </th>
+            <th scope="col" jhiSortBy="maLenhSanXuat">
+              <span>Mã SAP</span>
+            </th>
+            <th scope="col" jhiSortBy="maLenhSanXuat">
+              <span>Tên SAP</span>
+            </th>
+            <th scope="col" jhiSortBy="maLenhSanXuat">
+              <span>Mã WO</span>
+            </th>
+            <th scope="col" jhiSortBy="maLenhSanXuat">
+              <span>Version</span>
+            </th>
+            <th scope="col" jhiSortBy="maLenhSanXuat">
+              <span>Mã kho nhập</span>
+            </th>
+            <th scope="col" jhiSortBy="maLenhSanXuat">
+              <span>Trạng thái</span>
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr data-cy="entityTable">
+            <td>
+              <input type="number" class="form-control" list="maLenhSanXuat" formControlName="maLenhSanXuat" required="" />
+            </td>
+
+            <td>
+              <input class="form-control" type="text" formControlName="loaiThietBi" required />
+            </td>
+            <td>
+              <input class="form-control" type="text" formControlName="loaiThietBi" required />
+            </td>
+            <td>
+              <input class="form-control" type="text" formControlName="loaiThietBi" required />
+            </td>
+            <td>
+              <input class="form-control" type="text" formControlName="loaiThietBi" required />
+            </td>
+            <td>
+              <input class="form-control" type="text" formControlName="loaiThietBi" required />
+            </td>
+            <td>
+              <input class="form-control" type="text" formControlName="loaiThietBi" required />
+            </td>
+          </tr>
+        </tbody>
 
         <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
           <label class="form-label" for="field_id">ID</label>
@@ -103,7 +154,7 @@
           <label class="form-label" for="field_comment">Comment</label>
           <input type="text" class="form-control" name="comment" id="field_comment" data-cy="comment" formControlName="comment" />
         </div>
-      </div>
+      </table>
 
       <div>
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">

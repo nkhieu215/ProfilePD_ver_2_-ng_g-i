@@ -18,8 +18,7 @@ import { LenhSanXuatDeleteDialogComponent } from '../delete/lenh-san-xuat-delete
   styleUrls: ['./lenh-san-xuat.component.css'],
 })
 export class LenhSanXuatComponent implements OnInit {
-  // resourceUrl = this.applicationConfigService.getEndpointFor('api/lenh-san-xuat');
-  resourceUrlTest = this.applicationConfigService.getEndpointFor('api/quan-ly-phe-duyet');
+  resourceUrl = this.applicationConfigService.getEndpointFor('api/lenh-san-xuat');
 
   formSearch = this.formBuilder.group({
     maLenhSanXuat: '',
@@ -101,9 +100,9 @@ export class LenhSanXuatComponent implements OnInit {
   }
 
   getLenhSanXuatList(): void {
-    this.http.get<any>(this.resourceUrlTest).subscribe(res => {
+    this.http.get<any>(this.resourceUrl).subscribe(res => {
       this.lenhSanXuats = res;
-      console.log(this.resourceUrlTest);
+      console.log(this.resourceUrl);
       console.log(res);
     });
   }
@@ -128,10 +127,10 @@ export class LenhSanXuatComponent implements OnInit {
 
     this.lenhSanXuats = [];
 
-    this.http.post<any>(this.resourceUrlTest, data).subscribe(res => {
+    this.http.post<any>(this.resourceUrl, data).subscribe(res => {
       this.lenhSanXuats = res;
       console.log(res);
-      console.log(this.resourceUrlTest);
+      console.log(this.resourceUrl);
       this.onSuccess(res.lenhSanXuats, res.headers, pageToLoad, !dontNavigate);
     });
   }

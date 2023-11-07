@@ -46,7 +46,7 @@
             </th>
             <!-- ----------------------------- Tìm kiếm theo mã thiết bị ----------------------------->
             <th scope="col" jhiSortBy="loaiThietBi">
-              <span>Loại thiết bị</span>
+              <span>Nhóm thiết bị</span>
               <input
                 #searchInput
                 class="loaiThietBi-col"
@@ -59,7 +59,7 @@
                 <option *ngFor="let data of kichBans" value="{{ data.loaiThietBi }}"></option>
               </datalist>
             </th>
-            <!-- ----------------------------- Tìm kiếm theo loại thiết bị ----------------------------->
+            <!-- ----------------------------- Tìm kiếm theo Nhóm thiết bị ----------------------------->
             <th scope="col" jhiSortBy="maThietBi">
               <span>Mã thiết bị</span>
               <input #searchInput type="text" formControlName="maThietBi" placeholder="search" list="maThietBi" />
@@ -67,9 +67,9 @@
                 <option *ngFor="let data of kichBans" value="{{ data.maThietBi }}"></option>
               </datalist>
             </th>
-            <!-- ----------------------------- Tìm kiếm theo mã sản phẩm ----------------------------->
+            <!-- ----------------------------- Tìm kiếm theo Nhóm sản phẩm ----------------------------->
             <th scope="col" jhiSortBy="maSanPham">
-              <span>Mã sản phẩm</span>
+              <span>Nhóm sản phẩm</span>
               <input #searchInput class="maSanPham-col" type="text" formControlName="maSanPham" placeholder="search" list="maSanPham" />
               <datalist id="maSanPham">
                 <option *ngFor="let data of kichBans" value="{{ data.maSanPham }}"></option>
@@ -216,10 +216,10 @@
         <thead>
           <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending">
             <th scope="col" jhiSortBy="maKichBan"><span>Mã kịch bản</span></th>
-            <th scope="col" jhiSortBy="loaiThietBi"><span>Loại thiết bị</span></th>
+            <th scope="col" jhiSortBy="loaiThietBi"><span>Nhóm thiết bị</span></th>
             <th scope="col" jhiSortBy="maThietBi"><span>Mã thiết bị</span></th>
             <th scope="col" jhiSortBy="dayChuyen"><span>Dây chuyền</span></th>
-            <th scope="col" jhiSortBy="maSanPham"><span>Mã sản phẩm</span></th>
+            <th scope="col" jhiSortBy="maSanPham"><span>Nhóm sản phẩm</span></th>
             <th scope="col" jhiSortBy="versionSanPham"><span>Version sản phẩm</span></th>
           </tr>
         </thead>

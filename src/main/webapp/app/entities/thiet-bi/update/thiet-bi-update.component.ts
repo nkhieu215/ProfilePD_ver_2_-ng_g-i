@@ -61,7 +61,7 @@ export class ThietBiUpdateComponent implements OnInit {
   //------------------ nơi lưu danh sách thông số --------------------
   listOfThongSo: IQuanLyThongSo[] = [];
   listNhomThietBi: { loaiThietBi: string; maThietBi: string; dayChuyen: string }[] = [];
-  // ------------------ lưu tìm kiếm theo loại thiết bị ---------------
+  // ------------------ lưu tìm kiếm theo Nhóm thiết bị ---------------
   listMaThietBi: { maThietBi: string }[] = [];
   listLoaiThietBi: { loaiThietBi: string }[] = [];
   listDayChuyen: { dayChuyen: string }[] = [];
@@ -78,11 +78,11 @@ export class ThietBiUpdateComponent implements OnInit {
     loaiThietBi: string | null | undefined;
   }[] = [
     {
-      id: 0,
+      id: this.idThietBi,
       idThietBi: this.idThietBi,
       thongSo: null,
       moTa: this.moTa,
-      status: 'active',
+      status: this.status,
       phanLoai: '',
       maThietBi: this.maThietBi,
       loaiThietBi: this.loaiThietBi,
@@ -119,7 +119,9 @@ export class ThietBiUpdateComponent implements OnInit {
   }
   //===============================================================         *         ===============================================================
   ngOnInit(): void {
-    this.accountService.identity().subscribe(account=>{this.account = account});
+    this.accountService.identity().subscribe(account => {
+      this.account = account;
+    });
     this.activatedRoute.data.subscribe(({ thietBi }) => {
       if (thietBi.id === undefined) {
         // console.log(thietBi)
@@ -213,7 +215,7 @@ export class ThietBiUpdateComponent implements OnInit {
     }
     // console.log('tuong ung: ', this.listOfThietBi);
   }
-  //---------------------------------- Set thông tin tương ứng theo loại thiết bị-----------------------------
+  //---------------------------------- Set thông tin tương ứng theo Nhóm thiết bị-----------------------------
   timKiemTheoLoaiThietBi(): void {
     this.loaiThietBi = this.editForm.get(['loaiThietBi'])!.value;
     // console.log(this.editForm.get(['loaiThietBi'])!.value);

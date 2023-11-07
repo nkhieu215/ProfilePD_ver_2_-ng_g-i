@@ -45,19 +45,26 @@
             </th>
 
             <!-- ----------------------------- Tìm kiếm theo mã thiết bị ----------------------------->
-            <th scope="col" jhiSortBy="maThietBi">
-              <span>Loại thiết bị</span>
-              <input #searchInput class="loaiThietBi-col" type="text" formControlName="maThietBi" placeholder="search" list="maThietBi" />
-              <datalist id="maThietBi">
-                <option *ngFor="let data of sanXuatHangNgays" value="{{ data.maThietBi }}"></option>
-              </datalist>
-            </th>
-            <!-- ----------------------------- Tìm kiếm theo loại thiết bị ----------------------------->
             <th scope="col" jhiSortBy="loaiThietBi">
-              <span>Mã thiết bị</span>
-              <input #searchInput type="text" formControlName="loaiThietBi" placeholder="search" list="loaiThietBi" />
+              <span>Nhóm thiết bị</span>
+              <input
+                #searchInput
+                class="loaiThietBi-col"
+                type="text"
+                formControlName="loaiThietBi"
+                placeholder="search"
+                list="loaiThietBi"
+              />
               <datalist id="loaiThietBi">
                 <option *ngFor="let data of sanXuatHangNgays" value="{{ data.loaiThietBi }}"></option>
+              </datalist>
+            </th>
+            <!-- ----------------------------- Tìm kiếm theo Nhóm thiết bị ----------------------------->
+            <th scope="col" jhiSortBy="maThietBi">
+              <span>Mã thiết bị</span>
+              <input #searchInput type="text" formControlName="maThietBi" placeholder="search" list="maThietBi" />
+              <datalist id="maThietBi">
+                <option *ngFor="let data of sanXuatHangNgays" value="{{ data.maThietBi }}"></option>
               </datalist>
             </th>
             <!-- ----------------------------- Tìm kiếm theo dây chuyền ----------------------------->
@@ -68,9 +75,9 @@
                 <option *ngFor="let data of sanXuatHangNgays" value="{{ data.dayChuyen }}"></option>
               </datalist>
             </th>
-            <!-- ----------------------------- Tìm kiếm theo mã sản phẩm ----------------------------->
+            <!-- ----------------------------- Tìm kiếm theo Nhóm sản phẩm ----------------------------->
             <th scope="col" jhiSortBy="maSanPham">
-              <span>Mã sản phẩm</span>
+              <span>Nhóm sản phẩm</span>
               <input #searchInput type="text" formControlName="maSanPham" placeholder="search" list="maSanPham" />
               <datalist id="maSanPham">
                 <option *ngFor="let data of sanXuatHangNgays" value="{{ data.maSanPham }}"></option>
