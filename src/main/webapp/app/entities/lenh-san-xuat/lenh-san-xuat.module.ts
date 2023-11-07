@@ -1,3 +1,4 @@
+import { NgxPaginationModule } from 'ngx-pagination';
 import { NgModule } from '@angular/core';
 import { SharedModule } from 'app/shared/shared.module';
 import { LenhSanXuatComponent } from './list/lenh-san-xuat.component';
@@ -7,7 +8,7 @@ import { LenhSanXuatDeleteDialogComponent } from './delete/lenh-san-xuat-delete-
 import { LenhSanXuatRoutingModule } from './route/lenh-san-xuat-routing.module';
 
 @NgModule({
-  imports: [SharedModule, LenhSanXuatRoutingModule],
+  imports: [SharedModule, LenhSanXuatRoutingModule, NgxPaginationModule],
   declarations: [LenhSanXuatComponent, LenhSanXuatDetailComponent, LenhSanXuatUpdateComponent, LenhSanXuatDeleteDialogComponent],
   entryComponents: [LenhSanXuatDeleteDialogComponent],
 })

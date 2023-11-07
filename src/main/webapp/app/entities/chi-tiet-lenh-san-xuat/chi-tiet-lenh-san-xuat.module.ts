@@ -1,3 +1,4 @@
+import { NgxPaginationModule } from 'ngx-pagination';
 import { NgModule } from '@angular/core';
 import { SharedModule } from 'app/shared/shared.module';
 import { ChiTietLenhSanXuatComponent } from './list/chi-tiet-lenh-san-xuat.component';
@@ -7,7 +8,7 @@ import { ChiTietLenhSanXuatDeleteDialogComponent } from './delete/chi-tiet-lenh-
 import { ChiTietLenhSanXuatRoutingModule } from './route/chi-tiet-lenh-san-xuat-routing.module';
 
 @NgModule({
-  imports: [SharedModule, ChiTietLenhSanXuatRoutingModule],
+  imports: [SharedModule, ChiTietLenhSanXuatRoutingModule, NgxPaginationModule],
   declarations: [
     ChiTietLenhSanXuatComponent,
     ChiTietLenhSanXuatDetailComponent,

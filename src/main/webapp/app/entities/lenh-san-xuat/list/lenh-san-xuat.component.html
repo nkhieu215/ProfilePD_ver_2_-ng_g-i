@@ -167,16 +167,14 @@
 
   <div *ngIf="lenhSanXuats && lenhSanXuats.length > 0">
     <div>
-      <ngb-pagination
-        [collectionSize]="totalItems"
-        [(page)]="ngbPaginationPage"
-        [pageSize]="itemsPerPage"
-        [maxSize]="5"
-        [rotate]="true"
-        [boundaryLinks]="true"
-        (pageChange)="loadPage($event)"
-        style="float: right"
-      ></ngb-pagination>
+      <select class="form-select" aria-label="Default select example" [(ngModel)]="itemPerPage">
+        <option value="10">10</option>
+        <option value="15">15</option>
+        <option value="20">20</option>
+        <option value="all">All</option>
+      </select>
+
+      <pagination-controls (pageChange)="page = $event" style="float: right"></pagination-controls>
     </div>
   </div>
 </div>

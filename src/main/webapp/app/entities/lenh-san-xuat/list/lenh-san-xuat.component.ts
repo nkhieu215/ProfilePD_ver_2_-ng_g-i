@@ -45,6 +45,8 @@ export class LenhSanXuatComponent implements OnInit {
   currentPage = 1;
   startIndex = 0;
 
+  @Input() itemPerPage = 10;
+
   @Input() maLenhSanXuat = '';
   @Input() SAPcode = '';
   @Input() SAPname = '';

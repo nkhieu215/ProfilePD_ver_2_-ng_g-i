@@ -8,7 +8,7 @@
         <span>Refresh List</span>
       </button>
 
-      <button
+      <!-- <button
         id="jh-create-entity"
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-chi-tiet-lenh-san-xuat"
@@ -16,71 +16,102 @@
       >
         <fa-icon icon="plus"></fa-icon>
         <span> Create a new Chi Tiet Lenh San Xuat </span>
-      </button>
+      </button> -->
     </div>
   </h2>
 
   <jhi-alert-error></jhi-alert-error>
 
-  <div class="alert alert-warning" id="no-result" *ngIf="chiTietLenhSanXuats?.length === 0">
+  <div class="alert alert-warning" id="no-result" *ngIf="lenhSanXuats?.length === 0">
     <span>No chiTietLenhSanXuats found</span>
   </div>
 
-  <div class="table-responsive" id="entities" *ngIf="chiTietLenhSanXuats && chiTietLenhSanXuats.length > 0">
+  <div class="table-responsive" id="entities" *ngIf="lenhSanXuats && lenhSanXuats.length > 0">
     <form [formGroup]="formSearch">
       <table class="table table-striped" aria-describedby="page-heading">
         <thead>
           <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
             <th scope="col" jhiSortBy="id">
               <span>STT</span>
+              <input type="text" style="width: 10px; border: none; background-color: #6c7ae0" />
             </th>
 
             <th scope="col" jhiSortBy="reelID">
               <span>Mã lệnh sản xuất</span>
+              <input #searchInput type="text" formControlName="maLenhSanXuat" placeholder="search" list="maThongSo" />
+              <datalist id="maLenhSanXuat">
+                <option *ngFor="let data of lenhSanXuats">{{ data.maLenhSanXuat }}</option>
+              </datalist>
             </th>
 
             <th scope="col" jhiSortBy="partNumber">
               <span>Mã SAP</span>
+              <input #searchInput type="text" formControlName="sapCode" placeholder="search" list="sapCode" />
+              <datalist id="maLenhSanXuat">
+                <option *ngFor="let data of lenhSanXuats">{{ data.sapCode }}</option>
+              </datalist>
             </th>
 
             <th scope="col" jhiSortBy="vendor">
               <span>Tên SAP</span>
+              <input #searchInput type="text" formControlName="sapName" placeholder="search" list="sapName" />
+              <datalist id="maLenhSanXuat">
+                <option *ngFor="let data of lenhSanXuats">{{ data.sapName }}</option>
+              </datalist>
             </th>
 
             <th scope="col" jhiSortBy="lot">
               <span>Mã WO</span>
+              <input #searchInput type="text" formControlName="workOrderCode" placeholder="search" list="workOrderCode" />
+              <datalist id="maLenhSanXuat">
+                <option *ngFor="let data of lenhSanXuats">{{ data.workOrderCode }}</option>
+              </datalist>
             </th>
 
             <th scope="col" jhiSortBy="userData1">
               <span>Version</span>
+              <input #searchInput type="text" formControlName="version" placeholder="search" list="version" />
+              <datalist id="maLenhSanXuat">
+                <option *ngFor="let data of lenhSanXuats">{{ data.version }}</option>
+              </datalist>
             </th>
 
             <th scope="col" jhiSortBy="userData2">
               <span>Mã kho nhập</span>
+              <input #searchInput type="text" formControlName="storageCode" placeholder="search" list="storageCode" />
+              <datalist id="maLenhSanXuat">
+                <option *ngFor="let data of lenhSanXuats">{{ data.storageCode }}</option>
+              </datalist>
             </th>
 
             <th scope="col" jhiSortBy="userData3">
               <span>Tổng số lượng nhập</span>
+              <input style="border: none; width: 9rem; background-color: #6c7ae0" />
             </th>
 
             <th scope="col" jhiSortBy="userData4">
               <span>Cập nhật bởi</span>
+              <input #searchInput type="text" formControlName="createBy" placeholder="search" list="createBy" />
             </th>
 
             <th scope="col" jhiSortBy="userData5">
               <span>Thời gian in tem</span>
+              <input type="datetime-local" ngbDatepicker #d="ngbDatepicker" />
             </th>
 
             <th scope="col" jhiSortBy="initialQuantity">
               <span>Trạng thái</span>
+              <input #searchInput type="text" formControlName="trangThai" placeholder="search" list="trangThai" />
             </th>
 
             <th scope="col" jhiSortBy="msdLevel">
               <span>Lưu ý</span>
+              <input style="border: none; width: 3rem; background-color: #6c7ae0" />
             </th>
 
             <th scope="col" jhiSortBy="msdInitialFloorTime">
               <span>Options</span>
+              <input style="border: none; width: 70%; background-color: #6c7ae0" />
             </th>
           </tr>
         </thead>
@@ -110,7 +141,7 @@
                   data-cy="entityDetailsButton"
                 >
                   <fa-icon icon="eye"></fa-icon>
-                  <span class="d-none d-md-inline">View</span>
+                  <!-- <span class="d-none d-md-inline">View</span> -->
                 </button>
 
                 <button
@@ -120,7 +151,7 @@
                   data-cy="entityEditButton"
                 >
                   <fa-icon icon="pencil-alt"></fa-icon>
-                  <span class="d-none d-md-inline">Edit</span>
+                  <!-- <span class="d-none d-md-inline">Edit</span> -->
                 </button>
 
                 <!-- <button type="submit" (click)="delete(lenhSanXuat)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
@@ -135,21 +166,16 @@
     </form>
   </div>
 
-  <div *ngIf="chiTietLenhSanXuats && chiTietLenhSanXuats.length > 0">
-    <div class="d-flex justify-content-center">
-      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
-    </div>
+  <div *ngIf="lenhSanXuats && lenhSanXuats.length > 0">
+    <div>
+      <select class="form-select" aria-label="Default select example" [(ngModel)]="itemPerPage">
+        <option value="10">10</option>
+        <option value="15">15</option>
+        <option value="20">20</option>
+        <option value="all">All</option>
+      </select>
 
-    <div class="d-flex justify-content-center">
-      <ngb-pagination
-        [collectionSize]="totalItems"
-        [(page)]="ngbPaginationPage"
-        [pageSize]="itemsPerPage"
-        [maxSize]="5"
-        [rotate]="true"
-        [boundaryLinks]="true"
-        (pageChange)="loadPage($event)"
-      ></ngb-pagination>
+      <pagination-controls (pageChange)="page = $event" style="float: right"></pagination-controls>
     </div>
   </div>
 </div>

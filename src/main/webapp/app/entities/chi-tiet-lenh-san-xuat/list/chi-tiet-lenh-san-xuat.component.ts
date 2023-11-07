@@ -1,7 +1,7 @@
 import { ILenhSanXuat } from 'app/entities/lenh-san-xuat/lenh-san-xuat.model';
 import { FormBuilder } from '@angular/forms';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { HttpHeaders, HttpResponse, HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
@@ -16,6 +16,7 @@ import { ChiTietLenhSanXuatDeleteDialogComponent } from '../delete/chi-tiet-lenh
 @Component({
   selector: 'jhi-chi-tiet-lenh-san-xuat',
   templateUrl: './chi-tiet-lenh-san-xuat.component.html',
+  styleUrls: ['./chi-tiet-lenh-san-xuat.component.css'],
 })
 export class ChiTietLenhSanXuatComponent implements OnInit {
   resourceUrlApprove = this.applicationConfigService.getEndpointFor('api/quan-ly-phe-duyet');
@@ -30,6 +31,8 @@ export class ChiTietLenhSanXuatComponent implements OnInit {
     createBy: '',
     trangThai: '',
   });
+
+  @Input() itemPerPage = 10;
 
   lenhSanXuats?: ILenhSanXuat[];
 
@@ -75,7 +78,12 @@ export class ChiTietLenhSanXuatComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.handleNavigation();
+    // this.handleNavigation();
+    this.formSearch.valueChanges.subscribe(data => {
+      console.log(data);
+      this.timKiemTem(data);
+    });
+    this.getLenhSanXuatList();
   }
 
   getLenhSanXuatList(): void {
