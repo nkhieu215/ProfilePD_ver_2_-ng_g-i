@@ -46,7 +46,7 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
   isSaving = false;
   predicate!: string;
   ascending!: boolean;
-
+  isSignalChange = false;
   dropdownList: IKichBan[] = [];
   @Input() selectedItems: { maThietBi: string }[] = [];
   dropdownSettings = {};
@@ -151,61 +151,46 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
       this.getAllDayChuyen();
       this.getAllThongSo();
       this.getAllThietBi();
-      // this.getAllNhomThietBi();
-      this.http.get<any>(this.listNhomThietBiUrl).subscribe(res => {
-        this.listNhomThietBi = res;
+      this.getAllNhomThietBi();
+      this.http.get<any>(this.listNhomThietBiUrl).subscribe(res1 => {
+        this.listNhomThietBi = res1;
+        if (sanXuatHangNgay.id === undefined) {
+          const today = dayjs().startOf('minute');
+          sanXuatHangNgay.ngayTao = today;
+          sanXuatHangNgay.timeUpdate = today;
+        } else {
+          this.idSanXuatHangNgay = sanXuatHangNgay.id;
+          this.maThietBi = sanXuatHangNgay.maThietBi;
+          this.dayChuyen = sanXuatHangNgay.dayChuyen;
+          this.maSanPham = sanXuatHangNgay.maSanPham;
+          this.versionSanPham = sanXuatHangNgay.versionSanPham;
+          this.loaiThietBi = sanXuatHangNgay.loaiThietBi;
+          const today = dayjs().startOf('minute');
+          sanXuatHangNgay.timeUpdate = today;
+          //Lấy danh sách thông số thiết bị theo id
+          this.http.get<any>(`${this.getChiTietSanXuatUrl}/${sanXuatHangNgay.id as number}`).subscribe(res => {
+            this.listOfChiTietKichBan = res;
+            console.log('res: ', res);
+            //gán idThietBi cho list
+            for (let i = 0; i < this.listOfChiTietKichBan.length; i++) {
+              this.listOfChiTietKichBan[i].idSanXuatHangNgay = sanXuatHangNgay.id;
+            }
+            sessionStorage.setItem('kich ban goc', JSON.stringify(this.listOfChiTietKichBan));
+            // console.log("san xuat hang ngay:", this.originListOfChiTietKichBan)
+            console.log('id kich ban:', this.idSanXuatHangNgay);
+          });
+          this.getMaThietBi(sanXuatHangNgay.loaiThietBi, sanXuatHangNgay.maThietBi);
+        }
       });
-      if (sanXuatHangNgay.id === undefined) {
-        const today = dayjs().startOf('minute');
-        sanXuatHangNgay.ngayTao = today;
-        sanXuatHangNgay.timeUpdate = today;
-      } else {
-        this.idSanXuatHangNgay = sanXuatHangNgay.id;
-        this.maThietBi = sanXuatHangNgay.maThietBi;
-        this.dayChuyen = sanXuatHangNgay.dayChuyen;
-        this.maSanPham = sanXuatHangNgay.maSanPham;
-        this.versionSanPham = sanXuatHangNgay.versionSanPham;
-        this.loaiThietBi = sanXuatHangNgay.loaiThietBi;
-        const today = dayjs().startOf('minute');
-        sanXuatHangNgay.timeUpdate = today;
-        //Lấy danh sách thông số thiết bị theo id
-        this.http.get<any>(`${this.getChiTietSanXuatUrl}/${sanXuatHangNgay.id as number}`).subscribe(res => {
-          this.listOfChiTietKichBan = res;
-          //gán idThietBi cho list
-          for (let i = 0; i < this.listOfChiTietKichBan.length; i++) {
-            this.listOfChiTietKichBan[i].idSanXuatHangNgay = sanXuatHangNgay.id;
-          }
-          sessionStorage.setItem('kich ban goc', JSON.stringify(this.listOfChiTietKichBan));
-          // console.log("san xuat hang ngay:", this.originListOfChiTietKichBan)
-          console.log('id kich ban:', this.idSanXuatHangNgay);
-        });
-
-        for (let i = 0; i < this.listNhomThietBi.length; i++) {
-          if (sanXuatHangNgay.loaiThietBi === this.listNhomThietBi[i].loaiThietBi) {
-            const items = { maThietBi: this.listNhomThietBi[i].maThietBi };
-            this.listMaThietBi.push(items);
-          }
-        }
-        console.log(this.listMaThietBi);
-        console.log((this.onSelectItemRequest = sanXuatHangNgay.maThietBi.split(',')));
-        // gán vào selectItem
-        for (let i = 0; i < this.onSelectItemRequest.length; i++) {
-          // tạo 1 biến chứa value tại vị trí i
-          const item: { maThietBi: string } = { maThietBi: this.onSelectItemRequest[i] };
-          this.selectedItems.push(item);
-        }
-      }
-
       this.updateForm(sanXuatHangNgay);
     });
-
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'maThietBi',
       textField: 'maThietBi',
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 0,
+      itemsShowLimit: 2,
       allowSearchFilter: true,
     };
   }
@@ -219,7 +204,13 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
     console.log('request', this.onSelectItemRequest);
     console.log('item', item);
   }
-
+  public onDeSelect(item: any): void {
+    this.onSelectItemRequest = [];
+    for (let i = 0; i < this.selectedItems.length; i++) {
+      this.onSelectItemRequest.push(this.selectedItems[i].maThietBi);
+    }
+    console.log(this.onSelectItemRequest);
+  }
   onSelectAll(items: any): void {
     this.onSelectItemRequest = [];
     this.selectedItems = items;
@@ -302,6 +293,9 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
     this.http
       .get<IKichBan>(`${this.kichBanUrl1}/${this.editForm.get(['maKichBan'])!.value as number}`)
       .subscribe((res: ISanXuatHangNgay) => {
+        if (res.maThietBi !== null && res.maThietBi !== undefined) {
+          sessionStorage.setItem('ma thiet bi goc', res.maThietBi);
+        }
         //---------------------------------- Set thông tin tương ứng theo Nhóm thiết bị-----------------------------
         //lay thong tin chi tiet kich ban
         // console.log('hello', this.listNhomThietBi);
@@ -369,6 +363,7 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
   // ---------------------------- save ---------------------
 
   save(): void {
+    this.ocChangeKichBanSXHN();
     this.isSaving = true;
     const sanXuatHangNgay = this.createFromForm();
     if (sanXuatHangNgay.id !== undefined) {
@@ -382,7 +377,10 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
 
   saveChiTietSanXuat(): void {
     //kiểm tra sự thay đổi
-    this.onChangeChiTietSXHN();
+    if (this.isSignalChange === false) {
+      this.onChangeChiTietSXHN();
+      this.isSignalChange = true;
+    }
     if (this.editForm.get(['id'])!.value === undefined) {
       // gán id kịch bản, mã kịch bản vào list chi tiết kịch bản request
       for (let i = 0; i < this.listOfChiTietKichBan.length; i++) {
@@ -419,6 +417,23 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
     });
   }
   // bat su kien thay doi
+  ocChangeKichBanSXHN(): void {
+    const result = sessionStorage.getItem('ma thiet bi goc');
+    if (result) {
+      if (this.onSelectItemRequest.toString() !== result.toString()) {
+        console.log('bắt được sự kiện thay đổi');
+        console.log('ma thiet bi goc: ', result.toString());
+        console.log('ma thiet bi thay doi: ', this.onSelectItemRequest.toString());
+        const change = { signal: 2 };
+        this.http.put<any>(`${this.changeSignalUrl}/${this.idSanXuatHangNgay as number}`, change).subscribe(() => {
+          console.log('thanh cong');
+          this.isSignalChange = true;
+        });
+      } else {
+        console.log('khong bat duoc su kien thay doi');
+      }
+    }
+  }
   onChangeChiTietSXHN(): void {
     const result = sessionStorage.getItem('kich ban goc');
     if (result) {

@@ -27,6 +27,7 @@ export class KichBanComponent implements OnInit {
   kichBanDoiChieu = this.applicationConfigService.getEndpointFor('api/kich-ban');
   SanXuatHangNgayDoiChieu = this.applicationConfigService.getEndpointFor('api/chi-tiet-san-xuat');
   sanXuatHangNgayUrl = this.applicationConfigService.getEndpointFor('api/san-xuat-hang-ngay');
+  sanXuatHangNgayUrl1 = this.applicationConfigService.getEndpointFor('api/san-xuat-hang-ngay/ma-kich-ban');
   putChiTietKichBanUrl = this.applicationConfigService.getEndpointFor('api/kich-ban/cap-nhat-thong-so-kich-ban');
   formSearch = this.formBuilder.group({
     maKichBan: '',
@@ -176,6 +177,11 @@ export class KichBanComponent implements OnInit {
   }
 
   openModal(id: number | undefined, maKichBan: string | null | undefined, content: TemplateRef<any>): void {
+    //lay danh sach kbSXHN
+    this.http.get<any>(`${this.sanXuatHangNgayUrl1}/${maKichBan as string}`).subscribe(res => {
+      console.log('res: ', res);
+      const result = res.maKichBan.split(',');
+    });
     this.modalService.open(content, { size: 'lg' });
     console.log(maKichBan);
     this.idSanXuatHangNgay = id;

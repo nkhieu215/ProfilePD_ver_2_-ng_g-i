@@ -43,6 +43,7 @@
                 [data]="listMaThietBi"
                 [(ngModel)]="selectedItems"
                 [ngModelOptions]="{ standalone: true }"
+                (onDeSelect)="onDeSelect($event)"
                 (onSelect)="onItemSelect($event)"
                 (onSelectAll)="onSelectAll($event)"
               >

@@ -32,10 +32,10 @@ class SecurityUtilsUnitTest {
     @Test
     void testGetCurrentUserLogin() {
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
-        securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("admin", "admin"));
+        securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("khachieu", "123"));
         SecurityContextHolder.setContext(securityContext);
         Optional<String> login = SecurityUtils.getCurrentUserLogin();
-        assertThat(login).contains("admin");
+        assertThat(login).contains("khachieu");
     }
 
     @Test
@@ -44,7 +44,7 @@ class SecurityUtilsUnitTest {
         Map<String, Object> claims = new HashMap<>();
         claims.put("groups", AuthoritiesConstants.USER);
         claims.put("sub", 123);
-        claims.put("preferred_username", "admin");
+        claims.put("preferred_username", "khachieu");
         OidcIdToken idToken = new OidcIdToken(ID_TOKEN, Instant.now(), Instant.now().plusSeconds(60), claims);
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.USER));
@@ -55,7 +55,7 @@ class SecurityUtilsUnitTest {
 
         Optional<String> login = SecurityUtils.getCurrentUserLogin();
 
-        assertThat(login).contains("admin");
+        assertThat(login).contains("khachieu");
     }
 
     @Test
@@ -91,7 +91,7 @@ class SecurityUtilsUnitTest {
     @Test
     void testIsAuthenticated() {
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
-        securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("admin", "admin"));
+        securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("khachieu", "123"));
         SecurityContextHolder.setContext(securityContext);
         boolean isAuthenticated = SecurityUtils.isAuthenticated();
         assertThat(isAuthenticated).isTrue();
@@ -113,7 +113,7 @@ class SecurityUtilsUnitTest {
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.USER));
-        securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("user", "user", authorities));
+        securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("khachieu", "123", authorities));
         SecurityContextHolder.setContext(securityContext);
 
         assertThat(SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.USER)).isTrue();
@@ -125,7 +125,7 @@ class SecurityUtilsUnitTest {
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.USER));
-        securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("user", "user", authorities));
+        securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("khachieu", "123", authorities));
         SecurityContextHolder.setContext(securityContext);
 
         assertThat(SecurityUtils.hasCurrentUserAnyOfAuthorities(AuthoritiesConstants.USER, AuthoritiesConstants.ADMIN)).isTrue();
@@ -137,7 +137,7 @@ class SecurityUtilsUnitTest {
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.USER));
-        securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("user", "user", authorities));
+        securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("khachieu", "123", authorities));
         SecurityContextHolder.setContext(securityContext);
 
         assertThat(SecurityUtils.hasCurrentUserNoneOfAuthorities(AuthoritiesConstants.USER, AuthoritiesConstants.ADMIN)).isFalse();

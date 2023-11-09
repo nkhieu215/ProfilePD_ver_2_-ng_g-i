@@ -164,27 +164,7 @@ export class KichBanUpdateComponent implements OnInit {
               this.listOfChiTietKichBan[i].idKichBan = kichBan.id;
             }
           });
-          // lay danh sach ma thiet bi theo kichban.loaithietbi
-          for (let i = 0; i < this.listNhomThietBi.length; i++) {
-            if (kichBan.loaiThietBi === this.listNhomThietBi[i].loaiThietBi) {
-              const items = { maThietBi: this.listNhomThietBi[i].maThietBi };
-              this.listMaThietBi.push(items);
-            }
-          }
-          console.log('maTB:', this.listMaThietBi);
-          console.log('maTB2222:', this.listNhomThietBi);
-          // gan gia tri cho onselectItemRequest
-          console.log((this.onSelectItemRequest = kichBan.maThietBi.split(',')));
-          // gán vào selectItem
-          for (let i = 0; i < this.onSelectItemRequest.length; i++) {
-            // tạo 1 biến chứa value tại vị trí i
-            const item: { maThietBi: string } = { maThietBi: this.onSelectItemRequest[i] };
-            this.selectedItems.push(item);
-          }
-          console.log(this.selectedItems);
-          console.log('thong so kich ban:', this.listOfChiTietKichBan);
-          // console.log('ma thiet bi: ', this.editForm.get(['maThietBi'])!.value);
-          console.log('ma thiet bi', this.listMaThietBi);
+          this.getMaThietBiUpdate(kichBan.loaiThietBi, kichBan.maThietBi);
         }
       });
       this.updateForm(kichBan);
@@ -196,24 +176,25 @@ export class KichBanUpdateComponent implements OnInit {
       textField: 'maThietBi',
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 3,
+      itemsShowLimit: 2,
       allowSearchFilter: true,
     };
   }
   //
   onItemSelect(item: any): void {
     this.onSelectItemRequest = [];
-    // tao item1 va gan value = item
-    // const item1: { maThietBi: string } = item;
-    // this.selectedItems.push(item1);
-    // this.onSelectItemRequest.push(item1.maThietBi);
-
     for (let i = 0; i < this.selectedItems.length; i++) {
       this.onSelectItemRequest.push(this.selectedItems[i].maThietBi);
     }
 
     console.log(this.selectedItems);
     console.log(this.onSelectItemRequest);
+  }
+  public onDeSelect(item: any): void {
+    this.onSelectItemRequest = [];
+    for (let i = 0; i < this.selectedItems.length; i++) {
+      this.onSelectItemRequest.push(this.selectedItems[i].maThietBi);
+    }
   }
   onSelectAll(items: any): void {
     console.log(items);
@@ -269,6 +250,31 @@ export class KichBanUpdateComponent implements OnInit {
       this.listDonVi = res;
       // console.log('don vi:', this.listDonVi);
     });
+  }
+  getMaThietBiUpdate(loaiTB: string | undefined | null, maTB: string | undefined | null): void {
+    //---------------------------------- Set thông tin tương ứng theo Nhóm thiết bị-----------------------------
+    this.listMaThietBi = [];
+    // console.log('ma thiet bi:',this.listNhomThietBi)
+    console.log('loai thiet bi', loaiTB);
+    for (let i = 0; i < this.listNhomThietBi.length; i++) {
+      if (loaiTB === this.listNhomThietBi[i].loaiThietBi) {
+        const items = { maThietBi: this.listNhomThietBi[i].maThietBi };
+        this.listMaThietBi.push(items);
+      }
+    }
+    console.log(this.listMaThietBi);
+    // gán vào selectItem
+    if (maTB) {
+      this.onSelectItemRequest = maTB.split(',');
+      for (let i = 0; i < this.onSelectItemRequest.length; i++) {
+        for (let j = 0; j < this.listMaThietBi.length; j++) {
+          if (this.listMaThietBi[j].maThietBi === this.onSelectItemRequest[i]) {
+            this.selectedItems = [...this.selectedItems, this.listMaThietBi[j]];
+          }
+        }
+      }
+      console.log('item log', this.selectedItems);
+    }
   }
   getMaThietBi(): void {
     //---------------------------------- Set thông tin tương ứng theo Nhóm thiết bị-----------------------------

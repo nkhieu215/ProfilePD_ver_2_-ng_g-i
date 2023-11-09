@@ -332,6 +332,12 @@ public class UserController {
         return responseList;
     }
 
+    @GetMapping("/san-xuat-hang-ngay/ma-kich-ban/{maKichBan}")
+    public SanXuatHangNgay getSXHNByMaKichBan(@PathVariable String maKichBan) {
+        SanXuatHangNgay sanXuatHangNgay = this.userServices.getSXHNByMaKichBan(maKichBan);
+        return sanXuatHangNgay;
+    }
+
     //--------------------------- *  ----------------------------------------------------------------
     //------------------------------------------------ Nhóm thiết bị ---------------------------------------------------
     @GetMapping("/nhom-thiet-bi")

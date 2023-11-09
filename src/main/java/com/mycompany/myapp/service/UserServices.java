@@ -632,6 +632,12 @@ public class UserServices {
         return sanXuatHangNgayList;
     }
 
+    //☺ tim kiem thong tin kich ban theo ma kich ban
+    public SanXuatHangNgay getSXHNByMaKichBan(String maKichBan) {
+        SanXuatHangNgay sanXuatHangNgay = this.sanXuatHangNgayRepository.findAllByMaKichBan(maKichBan);
+        return sanXuatHangNgay;
+    }
+
     //------------------------------------------------------ *  --------------------------------------------------------
     //------------------------------------------------ Nhóm thiết bị ---------------------------------------------------
     public List<NhomThietBi> getAllNhomThietBi() {
