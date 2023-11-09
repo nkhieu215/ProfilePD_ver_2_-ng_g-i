@@ -136,7 +136,28 @@
             </td>
             <td>{{ sanXuatHangNgay.maKichBan }}</td>
             <td>{{ sanXuatHangNgay.loaiThietBi }}</td>
-            <td>{{ sanXuatHangNgay.maThietBi }}</td>
+            <td title="{{ sanXuatHangNgay.maThietBi }}">
+              <a
+                class="btn btn-primary"
+                data-bs-toggle="collapse"
+                href="#multiCollapseExample1"
+                role="button"
+                aria-expanded="false"
+                aria-controls="multiCollapseExample1"
+              >
+                Toggle first element
+              </a>
+              <div class="row">
+                <div class="col">
+                  <div class="collapse multi-collapse" id="multiCollapseExample1">
+                    <div class="card card-body">
+                      {{ sanXuatHangNgay.maThietBi }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {{ sanXuatHangNgay.maThietBi }}
+            </td>
             <td>{{ sanXuatHangNgay.dayChuyen }}</td>
             <td>{{ sanXuatHangNgay.maSanPham }}</td>
             <td>{{ sanXuatHangNgay.versionSanPham }}</td>

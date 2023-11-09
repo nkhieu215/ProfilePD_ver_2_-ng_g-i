@@ -41,12 +41,6 @@
               <input class="form-control" type="text" formControlName="loaiThietBi" required />
             </td>
             <td>
-              <!-- <input class="form-control" list="maThietBi" type="text" [(ngModel)]="maThietBi"
-                [ngModelOptions]="{standalone: true}" (change)="setDayChuyen()" required>
-              <datalist id="maThietBi">
-                <option *ngFor="let item of listMaThietBi" value="{{item.maThietBi}}"></option>
-              </datalist> -->
-
               <ng-multiselect-dropdown
                 [placeholder]="'Search'"
                 [settings]="dropdownSettings"
@@ -57,7 +51,11 @@
                 (onSelectAll)="onSelectAll($event)"
               >
               </ng-multiselect-dropdown>
+              <tr *ngFor="let item of selectedItems">
+                <td><input type="text" [(ngModel)]="item.maThietBi" [ngModelOptions]="{ standalone: true }" required /></td>
+              </tr>
             </td>
+
             <td>
               <input class="form-control" type="text" list="dayChuyen" [(ngModel)]="dayChuyen" [ngModelOptions]="{ standalone: true }" />
               <datalist id="dayChuyen">

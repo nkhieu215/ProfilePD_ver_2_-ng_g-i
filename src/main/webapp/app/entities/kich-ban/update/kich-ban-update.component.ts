@@ -198,15 +198,29 @@ export class KichBanUpdateComponent implements OnInit {
   }
   //
   onItemSelect(item: any): void {
+    this.onSelectItemRequest = [];
     // tao item1 va gan value = item
-    const item1: { maThietBi: string } = item;
-    this.selectedItems.push(item1);
-    this.onSelectItemRequest.push(item1.maThietBi);
+    // const item1: { maThietBi: string } = item;
+    // this.selectedItems.push(item1);
+    // this.onSelectItemRequest.push(item1.maThietBi);
+
+    for (let i = 0; i < this.selectedItems.length; i++) {
+      this.onSelectItemRequest.push(this.selectedItems[i].maThietBi);
+    }
+
     console.log(this.selectedItems);
     console.log(this.onSelectItemRequest);
   }
   onSelectAll(items: any): void {
     console.log(items);
+    this.selectedItems = items;
+    this.onSelectItemRequest = [];
+    for (let i = 0; i < this.selectedItems.length; i++) {
+      this.onSelectItemRequest.push(this.selectedItems[i].maThietBi);
+    }
+
+    console.log(this.selectedItems);
+    console.log(this.onSelectItemRequest);
   }
 
   //==================================================== Lấy danh sách =================================================
