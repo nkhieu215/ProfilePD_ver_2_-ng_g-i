@@ -147,42 +147,46 @@ export class KichBanUpdateComponent implements OnInit {
       this.getAllNhomThietBi();
       this.getAllDonVi();
       this.getAllKichBan();
-      if (kichBan.id === undefined) {
-        this.editForm.patchValue({ id: undefined });
-        const today = dayjs().startOf('day');
-        kichBan.ngayTao = today;
-        kichBan.timeUpdate = today;
-      } else {
-        //Lấy danh sách thông số thiết bị theo id
-        this.http.get<any>(`${this.getChiTietKichBanUrl}/${kichBan.id as number}`).subscribe(res => {
-          this.listOfChiTietKichBan = res;
-          //gán idThietBi cho list
-          for (let i = 0; i < this.listOfChiTietKichBan.length; i++) {
-            this.listOfChiTietKichBan[i].idKichBan = kichBan.id;
+      // lay danh sach nhom thiet bi
+      this.http.get<any>(this.listNhomThietBiUrl).subscribe(res1 => {
+        this.listNhomThietBi = res1;
+        if (kichBan.id === undefined) {
+          this.editForm.patchValue({ id: undefined });
+          const today = dayjs().startOf('day');
+          kichBan.ngayTao = today;
+          kichBan.timeUpdate = today;
+        } else {
+          //Lấy danh sách thông số thiết bị theo id
+          this.http.get<any>(`${this.getChiTietKichBanUrl}/${kichBan.id as number}`).subscribe(res => {
+            this.listOfChiTietKichBan = res;
+            //gán idThietBi cho list
+            for (let i = 0; i < this.listOfChiTietKichBan.length; i++) {
+              this.listOfChiTietKichBan[i].idKichBan = kichBan.id;
+            }
+          });
+          // lay danh sach ma thiet bi theo kichban.loaithietbi
+          for (let i = 0; i < this.listNhomThietBi.length; i++) {
+            if (kichBan.loaiThietBi === this.listNhomThietBi[i].loaiThietBi) {
+              const items = { maThietBi: this.listNhomThietBi[i].maThietBi };
+              this.listMaThietBi.push(items);
+            }
           }
-        });
-        // lay danh sach ma thiet bi theo kichban.loaithietbi
-        for (let i = 0; i < this.listNhomThietBi.length; i++) {
-          if (kichBan.loaiThietBi === this.listNhomThietBi[i].loaiThietBi) {
-            const items = { maThietBi: this.listNhomThietBi[i].maThietBi };
-            this.listMaThietBi.push(items);
+          console.log('maTB:', this.listMaThietBi);
+          console.log('maTB2222:', this.listNhomThietBi);
+          // gan gia tri cho onselectItemRequest
+          console.log((this.onSelectItemRequest = kichBan.maThietBi.split(',')));
+          // gán vào selectItem
+          for (let i = 0; i < this.onSelectItemRequest.length; i++) {
+            // tạo 1 biến chứa value tại vị trí i
+            const item: { maThietBi: string } = { maThietBi: this.onSelectItemRequest[i] };
+            this.selectedItems.push(item);
           }
+          console.log(this.selectedItems);
+          console.log('thong so kich ban:', this.listOfChiTietKichBan);
+          // console.log('ma thiet bi: ', this.editForm.get(['maThietBi'])!.value);
+          console.log('ma thiet bi', this.listMaThietBi);
         }
-        console.log('maTB:', this.listMaThietBi);
-        console.log('maTB2222:', this.listNhomThietBi);
-      }
-      // gan gia tri cho onselectItemRequest
-      console.log((this.onSelectItemRequest = kichBan.maThietBi.split(',')));
-      // gán vào selectItem
-      for (let i = 0; i < this.onSelectItemRequest.length; i++) {
-        // tạo 1 biến chứa value tại vị trí i
-        const item: { maThietBi: string } = { maThietBi: this.onSelectItemRequest[i] };
-        this.selectedItems.push(item);
-      }
-      console.log(this.selectedItems);
-      console.log('thong so kich ban:', this.listOfChiTietKichBan);
-      // console.log('ma thiet bi: ', this.editForm.get(['maThietBi'])!.value);
-      console.log('ma thiet bi', this.listMaThietBi);
+      });
       this.updateForm(kichBan);
     });
 
@@ -257,7 +261,7 @@ export class KichBanUpdateComponent implements OnInit {
           continue;
         }
       }
-      console.log('loai thiet bi:', this.listNhomThietBi);
+      // console.log('loai thiet bi:', this.listNhomThietBi);
     });
   }
   getAllDonVi(): void {

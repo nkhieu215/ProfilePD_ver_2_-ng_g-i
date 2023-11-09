@@ -50,9 +50,7 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
   dropdownList: IKichBan[] = [];
   @Input() selectedItems: { maThietBi: string }[] = [];
   dropdownSettings = {};
-
   onSelectItemRequest: string[] = [];
-  onSelectItemResult: string[] = [];
 
   account: Account | null = null;
 
@@ -153,7 +151,10 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
       this.getAllDayChuyen();
       this.getAllThongSo();
       this.getAllThietBi();
-      this.getAllNhomThietBi();
+      // this.getAllNhomThietBi();
+      this.http.get<any>(this.listNhomThietBiUrl).subscribe(res => {
+        this.listNhomThietBi = res;
+      });
       if (sanXuatHangNgay.id === undefined) {
         const today = dayjs().startOf('minute');
         sanXuatHangNgay.ngayTao = today;
@@ -204,7 +205,7 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
       textField: 'maThietBi',
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 3,
+      itemsShowLimit: 0,
       allowSearchFilter: true,
     };
   }
@@ -214,12 +215,6 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
     for (let i = 0; i < this.selectedItems.length; i++) {
       this.onSelectItemRequest.push(this.selectedItems[i].maThietBi);
     }
-
-    this.onSelectItemResult = this.selectedItems.map(selectedItems => selectedItems.maThietBi);
-    for (let i = 0; i < this.selectedItems.length; i++) {
-      this.onSelectItemResult.push(this.selectedItems[i].maThietBi);
-    }
-    console.log('result', this.onSelectItemResult);
     console.log('selectitem', this.selectedItems);
     console.log('request', this.onSelectItemRequest);
     console.log('item', item);
@@ -228,7 +223,6 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
   onSelectAll(items: any): void {
     this.onSelectItemRequest = [];
     this.selectedItems = items;
-
     for (let i = 0; i < this.selectedItems.length; i++) {
       this.onSelectItemRequest.push(this.selectedItems[i].maThietBi);
     }
@@ -236,14 +230,6 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
     console.log('requestAll', this.onSelectItemRequest);
     console.log(items);
   }
-
-  // resetData(): void {
-  //   if (this.maThietBi !== null && this.maThietBi !== undefined) {
-  //     this.listMaThietBi =
-  //       this.selectedItems.filter(x => this.maThietBi.includes(x.maThietBi));
-  //     console.log('aa');
-  //   }
-  // }
 
   //==================================================== Lấy danh sách =================================================
   getAllThongSo(): void {
@@ -283,41 +269,41 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
     });
   }
 
-  getMaThietBi(maTB: string | undefined | null): void {
+  getMaThietBi(loaiTB: string | undefined | null, maTB: string | undefined | null): void {
     this.listMaThietBi = [];
     // console.log('ma thiet bi:',this.listNhomThietBi)
-    console.log('loai thiet bi', maTB);
+    console.log('loai thiet bi', loaiTB);
     for (let i = 0; i < this.listNhomThietBi.length; i++) {
-      if (maTB === this.listNhomThietBi[i].loaiThietBi) {
+      if (loaiTB === this.listNhomThietBi[i].loaiThietBi) {
         const items = { maThietBi: this.listNhomThietBi[i].maThietBi };
         this.listMaThietBi.push(items);
       }
     }
     console.log(this.listMaThietBi);
+    // gán vào selectItem
+    if (maTB) {
+      this.onSelectItemRequest = maTB.split(',');
+      for (let i = 0; i < this.onSelectItemRequest.length; i++) {
+        for (let j = 0; j < this.listMaThietBi.length; j++) {
+          if (this.listMaThietBi[j].maThietBi === this.onSelectItemRequest[i]) {
+            this.selectedItems = [...this.selectedItems, this.listMaThietBi[j]];
+          }
+        }
+      }
+      console.log('item log', this.selectedItems);
+    }
   }
 
   //------------------------------ lay thong tin kịch bản, chi tiết kịch bản thông qua mã kịch bản ------------------------------
-  getChiTietKichBan(): void {
+  getChiTietKichBan(): { maThietBi: string }[] {
     this.selectedItems = [];
     this.listOfChiTietKichBan = [];
     //---------- lay thong tin kich ban -------------
     this.http
       .get<IKichBan>(`${this.kichBanUrl1}/${this.editForm.get(['maKichBan'])!.value as number}`)
       .subscribe((res: ISanXuatHangNgay) => {
-        if (res.maThietBi) {
-          this.onSelectItemRequest = res.maThietBi.split(',');
-          // gán vào selectItem
-          for (let i = 0; i < this.onSelectItemRequest.length; i++) {
-            // tạo 1 biến chứa value tại vị trí i
-            const item: { maThietBi: string } = { maThietBi: this.onSelectItemRequest[i] };
-            this.selectedItems.push(item);
-          }
-          console.log('item log', this.selectedItems);
-        }
         //---------------------------------- Set thông tin tương ứng theo Nhóm thiết bị-----------------------------
         //lay thong tin chi tiet kich ban
-        this.getMaThietBi(res.loaiThietBi);
-        // this.getMaThietBi(res.maThietBi);
         // console.log('hello', this.listNhomThietBi);
         // set thông tin kịch bản để hiển thị
         this.dayChuyen = res.dayChuyen;
@@ -332,7 +318,9 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
           versionSanPham: res.versionSanPham,
           trangThai: res.trangThai,
         });
-        console.log('lay ma thiet bi', res.maThietBi);
+        // console.log('lay ma thiet bi', res.maThietBi);
+        // lấy danh sách mã thiết bị theo loại thiết bị
+        this.getMaThietBi(res.loaiThietBi, res.maThietBi);
       });
     //lay thong tin chi tiet kich ban
     this.http.get<IChiTietKichBan[]>(`${this.kichBanUrl}/${this.editForm.get(['maKichBan'])!.value as number}`).subscribe(res => {
@@ -352,12 +340,9 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
         sessionStorage.setItem('kich ban goc', JSON.stringify(this.listOfChiTietKichBan));
       }
       //bật chức năng lắng nghe sự thay đổi giá trị chi tiết kịch bản sản xuất
-      // this.editChiTietForm.valueChanges.subscribe(data=>{
-      //   console.log("hellllllo :", data);
-      // })
-      // console.log('thong tin chi tiet kich ban: ', this.originListOfChiTietKichBan);
-      console.log('select item: ', this.selectedItems);
+      console.log('select item: ', { all: this.listMaThietBi, selected: this.selectedItems });
     });
+    return this.selectedItems;
   }
 
   //-------------------------- set Dây chuyền tương ứng theo mã thiết bị -------------------
