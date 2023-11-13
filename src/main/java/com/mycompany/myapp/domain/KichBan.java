@@ -18,7 +18,8 @@ public class KichBan implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
     @Column(name = "id")
     private Long id;
 
@@ -40,6 +41,9 @@ public class KichBan implements Serializable {
     @Column(name = "version_san_pham")
     private String versionSanPham;
 
+    @Column(name = "nhom_san_pham")
+    private String nhomSanPham;
+
     @Column(name = "ngay_tao")
     private ZonedDateTime ngayTao;
 
@@ -52,12 +56,13 @@ public class KichBan implements Serializable {
     @Column(name = "trang_thai")
     private String trangThai;
 
-    @Column(name = "signal")
-    private Long signal;
+    @OneToMany(mappedBy = "kichBan")
+    @JsonIgnoreProperties(value = { "kichBan" }, allowSetters = true)
+    private Set<ChiTietKichBan> chiTietKichBans = new HashSet<>();
 
     @OneToMany(mappedBy = "kichBan")
     @JsonIgnoreProperties(value = { "kichBan" }, allowSetters = true)
-    private List<ChiTietKichBan> chiTietKichBans;
+    private Set<NhomSanPham> nhomSanPhams = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -152,6 +157,19 @@ public class KichBan implements Serializable {
         this.versionSanPham = versionSanPham;
     }
 
+    public String getNhomSanPham() {
+        return this.nhomSanPham;
+    }
+
+    public KichBan nhomSanPham(String nhomSanPham) {
+        this.setNhomSanPham(nhomSanPham);
+        return this;
+    }
+
+    public void setNhomSanPham(String nhomSanPham) {
+        this.nhomSanPham = nhomSanPham;
+    }
+
     public ZonedDateTime getNgayTao() {
         return this.ngayTao;
     }
@@ -204,22 +222,11 @@ public class KichBan implements Serializable {
         this.trangThai = trangThai;
     }
 
-    public Long getSignal() {
-        return signal;
-    }
-    public KichBan signal(Long signal){
-        this.setSignal(signal);
-        return this;
-    }
-    public void setSignal(Long signal) {
-        this.signal = signal;
-    }
-
-    public List<ChiTietKichBan> getChiTietKichBans() {
+    public Set<ChiTietKichBan> getChiTietKichBans() {
         return this.chiTietKichBans;
     }
 
-    public void setChiTietKichBans(List<ChiTietKichBan> chiTietKichBans) {
+    public void setChiTietKichBans(Set<ChiTietKichBan> chiTietKichBans) {
         if (this.chiTietKichBans != null) {
             this.chiTietKichBans.forEach(i -> i.setKichBan(null));
         }
@@ -229,7 +236,7 @@ public class KichBan implements Serializable {
         this.chiTietKichBans = chiTietKichBans;
     }
 
-    public KichBan chiTietKichBans(List<ChiTietKichBan> chiTietKichBans) {
+    public KichBan chiTietKichBans(Set<ChiTietKichBan> chiTietKichBans) {
         this.setChiTietKichBans(chiTietKichBans);
         return this;
     }
@@ -243,6 +250,37 @@ public class KichBan implements Serializable {
     public KichBan removeChiTietKichBan(ChiTietKichBan chiTietKichBan) {
         this.chiTietKichBans.remove(chiTietKichBan);
         chiTietKichBan.setKichBan(null);
+        return this;
+    }
+
+    public Set<NhomSanPham> getNhomSanPhams() {
+        return this.nhomSanPhams;
+    }
+
+    public void setNhomSanPhams(Set<NhomSanPham> nhomSanPhams) {
+        if (this.nhomSanPhams != null) {
+            this.nhomSanPhams.forEach(i -> i.setKichBan(null));
+        }
+        if (nhomSanPhams != null) {
+            nhomSanPhams.forEach(i -> i.setKichBan(this));
+        }
+        this.nhomSanPhams = nhomSanPhams;
+    }
+
+    public KichBan nhomSanPhams(Set<NhomSanPham> nhomSanPhams) {
+        this.setNhomSanPhams(nhomSanPhams);
+        return this;
+    }
+
+    public KichBan addNhomSanPham(NhomSanPham nhomSanPham) {
+        this.nhomSanPhams.add(nhomSanPham);
+        nhomSanPham.setKichBan(this);
+        return this;
+    }
+
+    public KichBan removeNhomSanPham(NhomSanPham nhomSanPham) {
+        this.nhomSanPhams.remove(nhomSanPham);
+        nhomSanPham.setKichBan(null);
         return this;
     }
 
@@ -265,22 +303,22 @@ public class KichBan implements Serializable {
         return getClass().hashCode();
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "KichBan{" +
-            "id=" + id +
-            ", maKichBan='" + maKichBan + '\'' +
-            ", maThietBi='" + maThietBi + '\'' +
-            ", loaiThietBi='" + loaiThietBi + '\'' +
-            ", dayChuyen='" + dayChuyen + '\'' +
-            ", maSanPham='" + maSanPham + '\'' +
-            ", versionSanPham='" + versionSanPham + '\'' +
-            ", ngayTao=" + ngayTao +
-            ", timeUpdate=" + timeUpdate +
-            ", updateBy='" + updateBy + '\'' +
-            ", trangThai='" + trangThai + '\'' +
-            ", signal=" + signal +
-            ", chiTietKichBans=" + chiTietKichBans +
-            '}';
+            "id=" + getId() +
+            ", maKichBan='" + getMaKichBan() + "'" +
+            ", maThietBi='" + getMaThietBi() + "'" +
+            ", loaiThietBi='" + getLoaiThietBi() + "'" +
+            ", dayChuyen='" + getDayChuyen() + "'" +
+            ", maSanPham='" + getMaSanPham() + "'" +
+            ", versionSanPham='" + getVersionSanPham() + "'" +
+            ", nhomSanPham='" + getNhomSanPham() + "'" +
+            ", ngayTao='" + getNgayTao() + "'" +
+            ", timeUpdate='" + getTimeUpdate() + "'" +
+            ", updateBy='" + getUpdateBy() + "'" +
+            ", trangThai='" + getTrangThai() + "'" +
+            "}";
     }
 }

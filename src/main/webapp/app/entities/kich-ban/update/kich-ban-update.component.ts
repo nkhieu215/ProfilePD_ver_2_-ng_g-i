@@ -37,12 +37,12 @@ export class KichBanUpdateComponent implements OnInit {
   listKichBanUrl = this.applicationConfigService.getEndpointFor('api/kich-ban');
   listDayChuyenUrl = this.applicationConfigService.getEndpointFor('api/day-chuyen');
   delThongSoKichBanUrl = this.applicationConfigService.getEndpointFor('api/kich-ban/del-thong-so-kich-ban');
+  updateKichBanUrl = this.applicationConfigService.getEndpointFor('api/kich-ban/update');
 
   //-------------------------------------------------------------------------------
   isSaving = false;
   predicate!: string;
   ascending!: boolean;
-
   dropdownList: IKichBan[] = [];
   @Input() selectedItems: { maThietBi: string }[] = [];
   dropdownSettings = {};
@@ -150,6 +150,7 @@ export class KichBanUpdateComponent implements OnInit {
       // lay danh sach nhom thiet bi
       this.http.get<any>(this.listNhomThietBiUrl).subscribe(res1 => {
         this.listNhomThietBi = res1;
+        console.log('nhom thiet bi: ', this.listNhomThietBi);
         if (kichBan.id === undefined) {
           this.editForm.patchValue({ id: undefined });
           const today = dayjs().startOf('day');
@@ -176,7 +177,7 @@ export class KichBanUpdateComponent implements OnInit {
       textField: 'maThietBi',
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 1,
+      itemsShowLimit: 2,
       allowSearchFilter: true,
     };
   }

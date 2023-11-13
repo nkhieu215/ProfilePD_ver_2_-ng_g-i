@@ -14,6 +14,7 @@ import { IKichBan } from '../kich-ban.model';
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/config/pagination.constants';
 import { KichBanService } from '../service/kich-ban.service';
 import { KichBanDeleteDialogComponent } from '../delete/kich-ban-delete-dialog.component';
+import { update } from 'cypress/types/lodash';
 
 @Component({
   selector: 'jhi-kich-ban',
@@ -29,6 +30,7 @@ export class KichBanComponent implements OnInit {
   sanXuatHangNgayUrl = this.applicationConfigService.getEndpointFor('api/san-xuat-hang-ngay');
   sanXuatHangNgayUrl1 = this.applicationConfigService.getEndpointFor('api/san-xuat-hang-ngay/ma-kich-ban');
   putChiTietKichBanUrl = this.applicationConfigService.getEndpointFor('api/kich-ban/cap-nhat-thong-so-kich-ban');
+  updateKichBanUrl = this.applicationConfigService.getEndpointFor('api/kich-ban/update');
   formSearch = this.formBuilder.group({
     maKichBan: '',
     maThietBi: '',
@@ -44,7 +46,9 @@ export class KichBanComponent implements OnInit {
   // lưu id
   idSanXuatHangNgay: number | null | undefined;
   @Input() itemPerPage = 10;
-
+  // danh sách mã thiết bị đối chiếu
+  listMaThietBiQLKB: string[] = [];
+  listMaThietBiSXHN: string[] = [];
   @Input() maKichBan = '';
   @Input() maThietBi = '';
   @Input() loaiThietBi = '';
@@ -63,6 +67,8 @@ export class KichBanComponent implements OnInit {
     trungbinhSignal: string;
     donViSignal: string;
   }[] = [];
+  maThietBiQLKBColor: string[] = [];
+  maThietBiSXHNColor: string[] = [];
   // lưu từ khóa tìm kiếm
   searchKeyword = '';
   // lưu kết quả tìm kiếm
@@ -177,31 +183,67 @@ export class KichBanComponent implements OnInit {
   }
 
   openModal(id: number | undefined, maKichBan: string | null | undefined, content: TemplateRef<any>): void {
+    //reset danh sách color
+    this.maThietBiQLKBColor = [];
+    this.maThietBiSXHNColor = [];
     //lay danh sach kbSXHN
-    this.http.get<any>(`${this.sanXuatHangNgayUrl1}/${maKichBan as string}`).subscribe(res => {
-      console.log('res: ', res);
-      const result = res.maKichBan.split(',');
-    });
-    this.modalService.open(content, { size: 'lg' });
-    console.log(maKichBan);
-    this.idSanXuatHangNgay = id;
-    this.tableSignal = [];
-    // Thông tin chung
-    this.http.get<any>(`${this.kichBanDoiChieu}/${id as number}`).subscribe(res => {
-      this.kichBan = res;
-      console.log('api', this.kichBan);
+    this.http.get<any>(`${this.sanXuatHangNgayUrl1}/${maKichBan as string}`).subscribe(res1 => {
+      this.listMaThietBiSXHN = res1.maThietBi.split(',');
+      console.log('res: ', this.listMaThietBiSXHN);
+      this.modalService.open(content, { size: 'lg' });
+      console.log(maKichBan);
+      this.idSanXuatHangNgay = id;
+      console.log('check id: ', this.idSanXuatHangNgay);
+      this.tableSignal = [];
+      // Thông tin chung
+      this.http.get<any>(`${this.kichBanDoiChieu}/${this.idSanXuatHangNgay as number}`).subscribe(res => {
+        this.kichBan = res;
+        console.log('ket qua kich ban: ', res);
+        this.listMaThietBiQLKB = res.maThietBi.split(',');
+        console.log('api', this.listMaThietBiQLKB);
+        // khởi tạo danh sách mã kịch bản color cho SXHN
+        for (let i = 0; i < this.listMaThietBiSXHN.length; i++) {
+          this.maThietBiSXHNColor.push('red');
+        }
+        // khởi tạo danh sách mã kịch bản color cho QLKB
+        for (let i = 0; i < this.listMaThietBiQLKB.length; i++) {
+          this.maThietBiQLKBColor.push('red');
+        }
+        // đổi màu giá trị của mã thiết bị SXHN nếu có sự khác biệt
+        for (let i = 0; i < this.listMaThietBiQLKB.length; i++) {
+          for (let j = 0; j < this.listMaThietBiSXHN.length; j++) {
+            if (this.listMaThietBiSXHN[j] === this.listMaThietBiQLKB[i]) {
+              this.maThietBiSXHNColor[j] = 'black';
+              this.isDataChanged = true;
+            }
+          }
+        }
+        // đổi màu giá trị của mã thiết bị QLKB nếu có sự khác biệt
+        for (let i = 0; i < this.maThietBiSXHNColor.length; i++) {
+          for (let j = 0; j < this.maThietBiQLKBColor.length; j++) {
+            console.log({ 1: this.listMaThietBiQLKB[i], 2: this.listMaThietBiSXHN[j] });
+            if (this.listMaThietBiQLKB[j] === this.listMaThietBiSXHN[i]) {
+              console.log({ 1: this.listMaThietBiQLKB[i], 2: this.listMaThietBiSXHN[j] });
+              this.maThietBiQLKBColor[j] = 'black';
+              this.isDataChanged = true;
+            }
+          }
+        }
+        console.log('result QLKB: ', this.maThietBiQLKBColor);
+        console.log('result SXHN: ', this.maThietBiSXHNColor);
+      });
     });
     // Lấy danh sách Chi tiết kịch bản so sánh với danh sách chi tiết sản xuất
     for (let j = 0; j < this.listOfSanXuatHangNgay.length; j++) {
       if (maKichBan === this.listOfSanXuatHangNgay[j].maKichBan) {
         this.http.get<any>(`${this.SanXuatHangNgayDoiChieu}/${this.listOfSanXuatHangNgay[j].id as number}`).subscribe(res => {
           this.chiTietSanXuats = res;
-          console.log('api-sxhn', res);
+          // console.log('api-sxhn', res);
           this.http.get<any>(`${this.resourceUrlKB}/${id as number}`).subscribe(res1 => {
             this.chiTietKichBans = res1;
 
-            console.log('res1 :', res1);
-            console.log('chi tiet kich ban1 :', this.chiTietKichBans);
+            // console.log('res1 :', res1);
+            // console.log('chi tiet kich ban1 :', this.chiTietKichBans);
             // cách 2:
             if (this.chiTietKichBans && this.chiTietSanXuats !== null) {
               for (let i = 0; i < this.chiTietKichBans.length; i++) {
@@ -336,6 +378,12 @@ export class KichBanComponent implements OnInit {
     console.log('Chi tiet kich ban', this.chiTietKichBans);
     console.log('Chi tiet san xuat', this.chiTietSanXuats);
     console.log('Id', this.idSanXuatHangNgay);
+    console.log('ma thiet bi', this.listMaThietBiSXHN.toString());
+    //Cập nhật mã kịch bản
+    const updateBody = { id: this.idSanXuatHangNgay, maThietBi: this.listMaThietBiSXHN.toString() };
+    this.http.put<any>(this.updateKichBanUrl, updateBody).subscribe(res => {
+      console.log('cap nhat ma kich ban thanh cong', res.maKichBan);
+    });
     if (this.chiTietKichBans && this.chiTietSanXuats) {
       for (let i = 0; i < this.chiTietKichBans.length; i++) {
         this.chiTietKichBans[i].thongSo = this.chiTietSanXuats[i].thongSo;
@@ -353,7 +401,7 @@ export class KichBanComponent implements OnInit {
       this.http.put<any>(`${this.sanXuatHangNgayUrl}`, change).subscribe(() => {
         console.log('thanh cong');
       });
-      window.location.reload();
+      // window.location.reload();
     }
   }
 }

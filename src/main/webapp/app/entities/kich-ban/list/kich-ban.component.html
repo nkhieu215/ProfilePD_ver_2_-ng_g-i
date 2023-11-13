@@ -198,7 +198,7 @@
     </div>
   </div>
 </div>
-
+<!------------------------------------ Popup đồng bộ ngược --------------------------------->
 <ng-template #content let-c="close" let-d="dismiss">
   <div class="modal-lg">
     <div class="modal-header">
@@ -212,42 +212,81 @@
     <div class="modal-body">
       <h4 data-cy="kichBanDetailsHeading"><span>Thông tin chi tiết kịch bản</span></h4>
       <hr />
-      <table class="table table-striped table-modal" aria-describedby="page-heading">
-        <thead>
-          <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending">
-            <th scope="col" jhiSortBy="maKichBan"><span>Mã kịch bản</span></th>
-            <th scope="col" jhiSortBy="loaiThietBi"><span>Nhóm thiết bị</span></th>
-            <th scope="col" jhiSortBy="maThietBi"><span>Mã thiết bị</span></th>
-            <th scope="col" jhiSortBy="dayChuyen"><span>Dây chuyền</span></th>
-            <th scope="col" jhiSortBy="maSanPham"><span>Nhóm sản phẩm</span></th>
-            <th scope="col" jhiSortBy="versionSanPham"><span>Version sản phẩm</span></th>
-          </tr>
-        </thead>
-        <tbody *ngIf="kichBan">
-          <td>
-            <span>{{ kichBan.maKichBan }}</span>
-          </td>
-          <td>
-            <span>{{ kichBan.loaiThietBi }}</span>
-          </td>
-          <td>
-            <span>{{ kichBan.maThietBi }}</span>
-          </td>
-          <td>
-            <span>{{ kichBan.dayChuyen }}</span>
-          </td>
-          <td>
-            <span>{{ kichBan.maSanPham }}</span>
-          </td>
-          <td>
-            <span>{{ kichBan.versionSanPham }}</span>
-          </td>
-        </tbody>
-      </table>
-
       <div class="table-header-kichban">
         <h4>Thông số kịch bản</h4>
         <h4>Thông số sản xuất hàng ngày</h4>
+      </div>
+      <!-- Bên quản lý kịch bản -->
+      <div class="table-body-kichban">
+        <table class="table table-striped table-modal" aria-describedby="page-heading">
+          <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending">
+              <th scope="col" jhiSortBy="maKichBan"><span>Mã kịch bản</span></th>
+              <th scope="col" jhiSortBy="loaiThietBi"><span>Nhóm thiết bị</span></th>
+              <th scope="col" jhiSortBy="maThietBi"><span>Mã thiết bị</span></th>
+              <th scope="col" jhiSortBy="dayChuyen"><span>Dây chuyền</span></th>
+              <th scope="col" jhiSortBy="maSanPham"><span>Nhóm sản phẩm</span></th>
+              <th scope="col" jhiSortBy="versionSanPham"><span>Version sản phẩm</span></th>
+            </tr>
+          </thead>
+          <tbody *ngIf="kichBan">
+            <td>
+              <span>{{ kichBan.maKichBan }}</span>
+            </td>
+            <td>
+              <span>{{ kichBan.loaiThietBi }}</span>
+            </td>
+            <td>
+              <tr *ngFor="let item of listMaThietBiQLKB; let i = index">
+                <span [ngStyle]="{ color: isDataChanged ? maThietBiQLKBColor[i] : 'black' }">{{ item }}</span>
+              </tr>
+            </td>
+            <td>
+              <span>{{ kichBan.dayChuyen }}</span>
+            </td>
+            <td>
+              <span>{{ kichBan.maSanPham }}</span>
+            </td>
+            <td>
+              <span>{{ kichBan.versionSanPham }}</span>
+            </td>
+          </tbody>
+        </table>
+        <!-- Bên sản xuất hàng ngày -->
+        <table class="table table-striped table-modal" aria-describedby="page-heading">
+          <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending">
+              <th scope="col" jhiSortBy="maKichBan"><span>Mã kịch bản</span></th>
+              <th scope="col" jhiSortBy="loaiThietBi"><span>Nhóm thiết bị</span></th>
+              <th scope="col" jhiSortBy="maThietBi"><span>Mã thiết bị</span></th>
+              <th scope="col" jhiSortBy="dayChuyen"><span>Dây chuyền</span></th>
+              <th scope="col" jhiSortBy="maSanPham"><span>Nhóm sản phẩm</span></th>
+              <th scope="col" jhiSortBy="versionSanPham"><span>Version sản phẩm</span></th>
+            </tr>
+          </thead>
+          <tbody *ngIf="kichBan">
+            <td>
+              <span>{{ kichBan.maKichBan }}</span>
+            </td>
+            <td>
+              <span>{{ kichBan.loaiThietBi }}</span>
+            </td>
+            <td>
+              <tr *ngFor="let item of listMaThietBiSXHN; let i = index">
+                <span [ngStyle]="{ color: isDataChanged ? maThietBiSXHNColor[i] : 'black' }">{{ item }}</span>
+              </tr>
+            </td>
+            <td>
+              <span>{{ kichBan.dayChuyen }}</span>
+            </td>
+            <td>
+              <span>{{ kichBan.maSanPham }}</span>
+            </td>
+            <td>
+              <span>{{ kichBan.versionSanPham }}</span>
+            </td>
+          </tbody>
+        </table>
       </div>
       <div class="table-body-kichban">
         <table class="table table-striped table-kichban" aria-describedby="page-heading">

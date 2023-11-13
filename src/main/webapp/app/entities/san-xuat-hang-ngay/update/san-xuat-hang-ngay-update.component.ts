@@ -159,6 +159,7 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
           sanXuatHangNgay.ngayTao = today;
           sanXuatHangNgay.timeUpdate = today;
         } else {
+          sessionStorage.setItem('ma thiet bi goc', sanXuatHangNgay.maThietBi);
           this.idSanXuatHangNgay = sanXuatHangNgay.id;
           this.maThietBi = sanXuatHangNgay.maThietBi;
           this.dayChuyen = sanXuatHangNgay.dayChuyen;
@@ -181,8 +182,8 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
           });
           this.getMaThietBi(sanXuatHangNgay.loaiThietBi, sanXuatHangNgay.maThietBi);
         }
+        this.updateForm(sanXuatHangNgay);
       });
-      this.updateForm(sanXuatHangNgay);
     });
     this.dropdownSettings = {
       singleSelection: false,
@@ -190,7 +191,7 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
       textField: 'maThietBi',
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 1,
+      itemsShowLimit: 2,
       allowSearchFilter: true,
     };
   }
@@ -363,10 +364,10 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
   // ---------------------------- save ---------------------
 
   save(): void {
-    this.ocChangeKichBanSXHN();
     this.isSaving = true;
     const sanXuatHangNgay = this.createFromForm();
     if (sanXuatHangNgay.id !== undefined) {
+      this.idSanXuatHangNgay = sanXuatHangNgay.id;
       this.showSuccessPopupService = false;
       this.subscribeToSaveResponse(this.sanXuatHangNgayService.update(sanXuatHangNgay));
     } else {
@@ -403,17 +404,15 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
 
   subscribeToCreateResponse(result: Observable<HttpResponse<ISanXuatHangNgay>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe(res => {
-      // alert('Thêm mới thành công');
-      // console.log("before:",res.body);
-      // gán id kịch bản
       this.idSanXuatHangNgay = res.body?.id;
+      this.ocChangeKichBanSXHN();
     });
   }
   subscribeToSaveResponse(result: Observable<HttpResponse<ISanXuatHangNgay>>): void {
     // alert('Cập nhật thành công');
-    result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
-      next: () => this.onSaveSuccess(),
-      error: () => this.onSaveError(),
+    result.pipe(finalize(() => this.onSaveFinalize())).subscribe(res => {
+      this.idSanXuatHangNgay = res.body?.id;
+      this.ocChangeKichBanSXHN();
     });
   }
   // bat su kien thay doi
