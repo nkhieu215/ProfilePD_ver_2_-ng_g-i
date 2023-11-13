@@ -22,8 +22,10 @@
 
   <jhi-alert-error></jhi-alert-error>
 
-  <div class="alert alert-warning" id="no-result" *ngIf="lenhSanXuats?.length === 0">
-    <span>No lenhSanXuats found</span>
+  <div class="alert" id="no-result" *ngIf="lenhSanXuats?.length === 0">
+    <div class="loader">
+      <div class="justify-content-center jimu-primary-loading"></div>
+    </div>
   </div>
 
   <div class="table-responsive" id="entities" *ngIf="lenhSanXuats && lenhSanXuats.length > 0">
@@ -116,7 +118,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let lenhSanXuat of lenhSanXuats; let i = index; trackBy: trackId" data-cy="entityTable">
+          <tr
+            *ngFor="
+              let lenhSanXuat of lenhSanXuats | paginate: { itemsPerPage: itemPerPage, currentPage: page };
+              let i = index;
+              trackBy: trackId
+            "
+            data-cy="entityTable"
+          >
             <td>
               <a>{{ i + 1 }}</a>
             </td>

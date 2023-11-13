@@ -78,7 +78,7 @@ export class ChiTietLenhSanXuatComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.handleNavigation();
+    // this.handleNavigation()  ;
     this.formSearch.valueChanges.subscribe(data => {
       console.log(data);
       this.timKiemTem(data);

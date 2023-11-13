@@ -6,25 +6,25 @@
       <table>
         <thead>
           <tr>
-            <th scope="col" jhiSortBy="maLenhSanXuat">
+            <th scope="col">
               <span>Mã lệnh sản xuất</span>
             </th>
-            <th scope="col" jhiSortBy="maLenhSanXuat">
+            <th scope="col">
               <span>Mã SAP</span>
             </th>
-            <th scope="col" jhiSortBy="maLenhSanXuat">
+            <th scope="col">
               <span>Tên SAP</span>
             </th>
-            <th scope="col" jhiSortBy="maLenhSanXuat">
+            <th scope="col">
               <span>Mã WO</span>
             </th>
-            <th scope="col" jhiSortBy="maLenhSanXuat">
+            <th scope="col">
               <span>Version</span>
             </th>
-            <th scope="col" jhiSortBy="maLenhSanXuat">
+            <th scope="col">
               <span>Mã kho nhập</span>
             </th>
-            <th scope="col" jhiSortBy="maLenhSanXuat">
+            <th scope="col">
               <span>Trạng thái</span>
             </th>
           </tr>
@@ -33,127 +33,29 @@
         <tbody>
           <tr data-cy="entityTable">
             <td>
-              <input type="number" class="form-control" list="maLenhSanXuat" formControlName="maLenhSanXuat" required="" />
+              <input class="form-control" id="maLenhSanXuat" list="maLenhSanXuat" formControlName="maLenhSanXuat" />
             </td>
 
             <td>
-              <input class="form-control" type="text" formControlName="loaiThietBi" required />
+              <input class="form-control" id="sapCode" list="sapCode" formControlName="sapCode" />
             </td>
             <td>
-              <input class="form-control" type="text" formControlName="loaiThietBi" required />
+              <input class="form-control" id="sapName" list="sapName" formControlName="sapName" />
             </td>
             <td>
-              <input class="form-control" type="text" formControlName="loaiThietBi" required />
+              <input class="form-control" id="workOrderCode" list="workOrderCode" formControlName="workOrderCode" />
             </td>
             <td>
-              <input class="form-control" type="text" formControlName="loaiThietBi" required />
+              <input class="form-control" id="version" list="version" formControlName="version" />
             </td>
             <td>
-              <input class="form-control" type="text" formControlName="loaiThietBi" required />
+              <input class="form-control" id="storageCode" list="storageCode" formControlName="storageCode" />
             </td>
             <td>
-              <input class="form-control" type="text" formControlName="loaiThietBi" required />
+              <input class="form-control" id="trangThai" list="trangThai" formControlName="trangThai" />
             </td>
           </tr>
         </tbody>
-
-        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
-          <label class="form-label" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_maLenhSanXuat">Ma Lenh San Xuat</label>
-          <input
-            type="number"
-            class="form-control"
-            name="maLenhSanXuat"
-            id="field_maLenhSanXuat"
-            data-cy="maLenhSanXuat"
-            formControlName="maLenhSanXuat"
-          />
-          <div
-            *ngIf="
-              editForm.get('maLenhSanXuat')!.invalid && (editForm.get('maLenhSanXuat')!.dirty || editForm.get('maLenhSanXuat')!.touched)
-            "
-          >
-            <small class="form-text text-danger" *ngIf="editForm.get('maLenhSanXuat')?.errors?.required"> This field is required. </small>
-            <small class="form-text text-danger" [hidden]="!editForm.get('maLenhSanXuat')?.errors?.number">
-              This field should be a number.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_sapCode">Sap Code</label>
-          <input type="text" class="form-control" name="sapCode" id="field_sapCode" data-cy="sapCode" formControlName="sapCode" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_sapName">Sap Name</label>
-          <input type="text" class="form-control" name="sapName" id="field_sapName" data-cy="sapName" formControlName="sapName" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_workOrderCode">Work Order Code</label>
-          <input
-            type="text"
-            class="form-control"
-            name="workOrderCode"
-            id="field_workOrderCode"
-            data-cy="workOrderCode"
-            formControlName="workOrderCode"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_version">Version</label>
-          <input type="text" class="form-control" name="version" id="field_version" data-cy="version" formControlName="version" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_storageCode">Storage Code</label>
-          <input
-            type="text"
-            class="form-control"
-            name="storageCode"
-            id="field_storageCode"
-            data-cy="storageCode"
-            formControlName="storageCode"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_totalQuantity">Total Quantity</label>
-          <input
-            type="text"
-            class="form-control"
-            name="totalQuantity"
-            id="field_totalQuantity"
-            data-cy="totalQuantity"
-            formControlName="totalQuantity"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_createBy">Create By</label>
-          <input type="text" class="form-control" name="createBy" id="field_createBy" data-cy="createBy" formControlName="createBy" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_entryTime">Entry Time</label>
-          <input type="text" class="form-control" name="entryTime" id="field_entryTime" data-cy="entryTime" formControlName="entryTime" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_trangThai">Trang Thai</label>
-          <input type="text" class="form-control" name="trangThai" id="field_trangThai" data-cy="trangThai" formControlName="trangThai" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" for="field_comment">Comment</label>
-          <input type="text" class="form-control" name="comment" id="field_comment" data-cy="comment" formControlName="comment" />
-        </div>
       </table>
 
       <div>
@@ -170,6 +72,145 @@
         >
           <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
         </button>
+      </div>
+
+      <h2 id="jhi-lenh-san-xuat-heading" data-cy="LenhSanXuatCreateUpdateHeading">Thông tin chi tiết tem</h2>
+      <button class="btn-add" (click)="addRowThongSoTemIn()">Add</button>
+      <div>
+        <table class="table table-striped" aria-describedby="page-heading">
+          <thead>
+            <tr>
+              <th scope="col"><span>STT</span></th>
+              <th scope="col"><span>Reel ID</span></th>
+              <th scope="col">Part Number</th>
+              <th scope="col">Vendor</th>
+              <th scope="col">IOT</th>
+              <th scope="col">User Data 1</th>
+              <th scope="col">User Data 2</th>
+              <th scope="col">User Data 3</th>
+              <th scope="col">User Data 4</th>
+              <th scope="col">User Data 5</th>
+              <th scope="col">Initial Quantity</th>
+              <th scope="col">MSD Level</th>
+              <th scope="col">MSD Initial Floor Time</th>
+              <th scope="col">MSD Bag Seal Date</th>
+              <th scope="col">Market Usage</th>
+              <th scope="col">Quantity Override</th>
+              <th scope="col">Shelf Time</th>
+              <th scope="col">SP Material Name</th>
+              <th scope="col">Warning Limit</th>
+              <th scope="col">Maximum Limit</th>
+              <th scope="col">Comments</th>
+              <th scope="col">Warm Up Time</th>
+              <th scope="col">Storage Unit</th>
+              <th scope="col">Sub Storage Unit</th>
+              <th scope="col">Location Override</th>
+              <th scope="col">Expiration Date</th>
+              <th scope="col">ManuFacturing Date</th>
+              <th scope="col">Part Class</th>
+              <th scope="col">Sap Code</th>
+              <th scope="col">Status</th>
+              <th scope="col">Checked</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+
+          <tr *ngFor="let data of chiTietLenhSanXuats; let i = index; trackBy: trackId" class="editable-row">
+            <td>
+              <span>{{ i + 1 }}</span>
+            </td>
+
+            <td><input class="input-table" type="text" list="reelID" />{{ data.reelID }}</td>
+
+            <td>
+              <input class="input-table" type="text" list="partNumber" />
+            </td>
+            <td>
+              <input class="input-table" type="text" list="vendor" />
+            </td>
+            <td>
+              <input class="input-table" type="text" list="lot" />
+            </td>
+            <td>
+              <input class="input-table" type="text" list="userData1" />
+            </td>
+            <td>
+              <input class="input-table" type="text" list="userData2" />
+            </td>
+            <td>
+              <input class="input-table" type="text" list="userData3" />
+            </td>
+            <td>
+              <input class="input-table" type="text" list="userData4" />
+            </td>
+            <td>
+              <input class="input-table" type="text" list="userData5" />
+            </td>
+            <td>
+              <input class="input-table" type="text" list="initialQuantity" />
+            </td>
+            <td>
+              <input class="input-table" type="text" list="msdLevel" />
+            </td>
+            <td>
+              <input class="input-table" type="text" list="msdInitialFloorTime" />
+            </td>
+            <td>
+              <input class="input-table" type="text" list="msdBagSealDate" />
+            </td>
+            <td>
+              <input class="input-table" type="text" list="marketUsage" />
+            </td>
+            <td>
+              <input class="input-table" type="text" list="quantityOverride" />
+            </td>
+            <td>
+              <input class="input-table" type="text" list="shelfTime" />
+            </td>
+            <td>
+              <input class="input-table" type="text" list="spMaterialName" />
+            </td>
+            <td>
+              <input class="input-table" type="text" list="warningLimit" />
+            </td>
+            <td>
+              <input class="input-table" type="text" list="maximumLimit" />
+            </td>
+            <td>
+              <input class="input-table" type="text" list="comments" />
+            </td>
+            <td>
+              <input class="input-table" type="text" list="warmupTime" />
+            </td>
+            <td>
+              <input class="input-table" type="text" list="storageUnit" />
+            </td>
+            <td>
+              <input class="input-table" type="text" list="subStorageUnit" />
+            </td>
+            <td>
+              <input class="input-table" type="text" list="locationOverride" />
+            </td>
+            <td>
+              <input class="input-table" type="text" list="expirationDate" />
+            </td>
+            <td>
+              <input class="input-table" type="text" list="manufacturingDate" />
+            </td>
+            <td>
+              <input class="input-table" type="text" list="partClass" />
+            </td>
+            <td>
+              <input class="input-table" type="text" list="sapCode" />
+            </td>
+            <td>
+              <input class="input-table" type="text" list="trangThai" />
+            </td>
+            <td>
+              <input class="input-table" type="text" list="checked" />
+            </td>
+          </tr>
+        </table>
       </div>
     </form>
   </div>

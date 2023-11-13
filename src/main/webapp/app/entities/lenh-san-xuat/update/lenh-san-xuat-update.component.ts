@@ -1,3 +1,4 @@
+import { IChiTietLenhSanXuat } from './../../chi-tiet-lenh-san-xuat/chi-tiet-lenh-san-xuat.model';
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -11,9 +12,14 @@ import { LenhSanXuatService } from '../service/lenh-san-xuat.service';
 @Component({
   selector: 'jhi-lenh-san-xuat-update',
   templateUrl: './lenh-san-xuat-update.component.html',
+  styleUrls: ['./lenh-san-xuat-update.component.css'],
 })
 export class LenhSanXuatUpdateComponent implements OnInit {
+  chiTietLenhSanXuats: IChiTietLenhSanXuat[] | null = [];
+
   isSaving = false;
+  predicate!: string;
+  ascending!: boolean;
 
   editForm = this.fb.group({
     id: [],
@@ -38,6 +44,10 @@ export class LenhSanXuatUpdateComponent implements OnInit {
     });
   }
 
+  trackId(_index: number, item: IChiTietLenhSanXuat): number {
+    return item.id!;
+  }
+
   previousState(): void {
     window.history.back();
   }
@@ -52,26 +62,26 @@ export class LenhSanXuatUpdateComponent implements OnInit {
     }
   }
 
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<ILenhSanXuat>>): void {
+  subscribeToSaveResponse(result: Observable<HttpResponse<ILenhSanXuat>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
       next: () => this.onSaveSuccess(),
       error: () => this.onSaveError(),
     });
   }
 
-  protected onSaveSuccess(): void {
+  onSaveSuccess(): void {
     this.previousState();
   }
 
-  protected onSaveError(): void {
+  onSaveError(): void {
     // Api for inheritance.
   }
 
-  protected onSaveFinalize(): void {
+  onSaveFinalize(): void {
     this.isSaving = false;
   }
 
-  protected updateForm(lenhSanXuat: ILenhSanXuat): void {
+  updateForm(lenhSanXuat: ILenhSanXuat): void {
     this.editForm.patchValue({
       id: lenhSanXuat.id,
       maLenhSanXuat: lenhSanXuat.maLenhSanXuat,
@@ -88,7 +98,7 @@ export class LenhSanXuatUpdateComponent implements OnInit {
     });
   }
 
-  protected createFromForm(): ILenhSanXuat {
+  createFromForm(): ILenhSanXuat {
     return {
       ...new LenhSanXuat(),
       id: this.editForm.get(['id'])!.value,
@@ -103,6 +113,12 @@ export class LenhSanXuatUpdateComponent implements OnInit {
       entryTime: this.editForm.get(['entryTime'])!.value,
       trangThai: this.editForm.get(['trangThai'])!.value,
       comment: this.editForm.get(['comment'])!.value,
+    };
+  }
+
+  addRowThongSoTemIn(): void {
+    const newRow = {
+      id: 0,
     };
   }
 }

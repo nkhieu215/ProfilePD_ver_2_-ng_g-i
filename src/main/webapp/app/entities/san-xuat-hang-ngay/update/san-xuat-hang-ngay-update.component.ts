@@ -190,7 +190,7 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
       textField: 'maThietBi',
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 2,
+      itemsShowLimit: 1,
       allowSearchFilter: true,
     };
   }
