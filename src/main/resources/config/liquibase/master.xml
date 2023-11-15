@@ -348,7 +348,7 @@
     <changeSet author="Dell (generated)" id="1699863987455-32">
         <dropTable tableName="kich_ban_change_status"/>
     </changeSet>
-    <changeSet author="Dell (generated)" id="1699863987455-1">
+    <!-- <changeSet author="Dell (generated)" id="1699863987455-1">
         <alterSequence sequenceName="sequence_generator"/>
     </changeSet>
     <changeSet author="Dell (generated)" id="1699863987455-2">
@@ -359,6 +359,6 @@
     </changeSet>
     <changeSet author="Dell (generated)" id="1699863987455-4">
         <alterSequence sequenceName="sequence_generator"/>
-    </changeSet>
+    </changeSet> -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

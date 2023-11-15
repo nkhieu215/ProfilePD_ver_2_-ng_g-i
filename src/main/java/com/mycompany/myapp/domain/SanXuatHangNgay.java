@@ -37,6 +37,9 @@ public class SanXuatHangNgay implements Serializable {
     @Column(name = "ma_san_pham")
     private String maSanPham;
 
+    @Column(name = "nhom_san_pham")
+    private String nhomSanPham;
+
     @Column(name = "version_san_pham")
     private String versionSanPham;
 
@@ -48,11 +51,13 @@ public class SanXuatHangNgay implements Serializable {
 
     @Column(name = "trang_thai")
     private String trangThai;
+
     @Column(name = "signal")
     private Long signal;
+
     @OneToMany(mappedBy = "sanXuatHangNgay")
     @JsonIgnoreProperties(value = { "sanXuatHangNgay" }, allowSetters = true)
-    private List<ChiTietSanXuat> chiTietSanXuats ;
+    private List<ChiTietSanXuat> chiTietSanXuats;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -119,6 +124,14 @@ public class SanXuatHangNgay implements Serializable {
 
     public void setDayChuyen(String dayChuyen) {
         this.dayChuyen = dayChuyen;
+    }
+
+    public String getNhomSanPham() {
+        return nhomSanPham;
+    }
+
+    public void setNhomSanPham(String nhomSanPham) {
+        this.nhomSanPham = nhomSanPham;
     }
 
     public String getMaSanPham() {
@@ -189,10 +202,12 @@ public class SanXuatHangNgay implements Serializable {
     public Long getSignal() {
         return signal;
     }
-    public SanXuatHangNgay signal(Long signal){
+
+    public SanXuatHangNgay signal(Long signal) {
         this.setSignal(signal);
         return this;
     }
+
     public void setSignal(Long signal) {
         this.signal = signal;
     }
@@ -247,20 +262,45 @@ public class SanXuatHangNgay implements Serializable {
         return getClass().hashCode();
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
-        return "SanXuatHangNgay{" +
-            "id=" + getId() +
-            ", maKichBan='" + getMaKichBan() + "'" +
-            ", maThietBi='" + getMaThietBi() + "'" +
-            ", loaiThietBi='" + getLoaiThietBi() + "'" +
-            ", dayChuyen='" + getDayChuyen() + "'" +
-            ", maSanPham='" + getMaSanPham() + "'" +
-            ", versionSanPham='" + getVersionSanPham() + "'" +
-            ", ngayTao='" + getNgayTao() + "'" +
-            ", timeUpdate='" + getTimeUpdate() + "'" +
-            ", trangThai='" + getTrangThai() + "'" +
-            "}";
+        return (
+            "SanXuatHangNgay{" +
+            "id=" +
+            id +
+            ", maKichBan='" +
+            maKichBan +
+            '\'' +
+            ", maThietBi='" +
+            maThietBi +
+            '\'' +
+            ", loaiThietBi='" +
+            loaiThietBi +
+            '\'' +
+            ", dayChuyen='" +
+            dayChuyen +
+            '\'' +
+            ", maSanPham='" +
+            maSanPham +
+            '\'' +
+            ", nhomSanPham='" +
+            nhomSanPham +
+            '\'' +
+            ", versionSanPham='" +
+            versionSanPham +
+            '\'' +
+            ", ngayTao=" +
+            ngayTao +
+            ", timeUpdate=" +
+            timeUpdate +
+            ", trangThai='" +
+            trangThai +
+            '\'' +
+            ", signal=" +
+            signal +
+            ", chiTietSanXuats=" +
+            chiTietSanXuats +
+            '}'
+        );
     }
 }

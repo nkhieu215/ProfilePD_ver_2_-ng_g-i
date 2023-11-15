@@ -61,6 +61,9 @@ public class UserServices {
     @Autowired
     private ChiTietLenhSanXuatRepository chiTietLenhSanXuatRepository;
 
+    @Autowired
+    private NhomSanPhamRepository nhomSanPhamRepository;
+
     //☺ Template login - Chức năng xác thực tài khoản
     //    public ResponseMessage loginAuth(UserPostRequest request) {
     //        UserEntity entity = userRepository.getByUserName(request.getUserName());
@@ -358,7 +361,7 @@ public class UserServices {
         for (ChiTietKichBan request : requests) {
             ChiTietKichBan entity = new ChiTietKichBan();
             entity.setMaKichBan(request.getMaKichBan());
-            entity.setHangMkb(request.getHangMkb());
+            entity.setTrangThai(request.getTrangThai());
             entity.setThongSo(request.getThongSo());
             entity.setMinValue(request.getMinValue());
             entity.setMaxValue(request.getMaxValue());
@@ -507,7 +510,7 @@ public class UserServices {
         for (ChiTietKichBan entity1 : entities) {
             ChiTietSanXuat entity2 = new ChiTietSanXuat();
             entity2.setMaKichBan(entity1.getMaKichBan());
-            entity2.setHangSxhn(entity1.getHangMkb());
+            entity2.setTrangThai(entity1.getTrangThai());
             entity2.setThongSo(entity1.getThongSo());
             entity2.setMinValue(entity1.getMinValue());
             entity2.setMaxValue(entity1.getMaxValue());
@@ -527,7 +530,7 @@ public class UserServices {
         for (ChiTietSanXuat request : requests) {
             ChiTietSanXuat entity = new ChiTietSanXuat();
             entity.setMaKichBan(request.getMaKichBan());
-            entity.setHangSxhn(request.getHangSxhn());
+            entity.setTrangThai(request.getTrangThai());
             entity.setThongSo(request.getThongSo());
             entity.setMinValue(request.getMinValue());
             entity.setMaxValue(request.getMaxValue());
@@ -708,5 +711,12 @@ public class UserServices {
     public List<ChiTietLenhSanXuat> chiTietLenhSanXuat(Long maLenhSanXuat) {
         List<ChiTietLenhSanXuat> entities = this.chiTietLenhSanXuatRepository.getAllByMaLenhSanXuatId(maLenhSanXuat);
         return entities;
+    }
+
+    //---------------------------------------- * ----------------------------------------------------------------------
+    // ---------------------- Nhom san pham ---------------------
+    public List<NhomSanPham> getAllNhomSanPham() {
+        List<NhomSanPham> nhomSanPhams = this.nhomSanPhamRepository.findAll();
+        return nhomSanPhams;
     }
 }

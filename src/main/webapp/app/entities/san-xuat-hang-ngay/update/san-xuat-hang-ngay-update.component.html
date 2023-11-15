@@ -17,7 +17,8 @@
               <span>Mã thiết bị<span style="color: red"> *</span></span>
             </th>
             <th scope="col" jhiSortBy="dayChuyen"><span>Dây chuyền</span></th>
-            <th scope="col" jhiSortBy="maSanPham"><span>Nhóm sản phẩm</span></th>
+            <th scope="col" jhiSortBy="nhomSanPham"><span>Nhóm sản phẩm</span></th>
+            <th scope="col" jhiSortBy="maSanPham"><span>Mã sản phẩm</span></th>
             <th scope="col" jhiSortBy="versionSanPham"><span>Version sản phẩm</span></th>
             <th scope="col" jhiSortBy="trangThai"><span>Trạng thái</span></th>
           </tr>
@@ -63,12 +64,22 @@
                 <option *ngFor="let item of listDayChuyen" value="{{ item.dayChuyen }}"></option>
               </datalist>
             </td>
+
             <td>
-              <input class="form-control" type="text" [(ngModel)]="maSanPham" [ngModelOptions]="{ standalone: true }" />
+              <input type="text" class="form-control" data-cy="nhomSanPham" list="nhomSanPham" formControlName="nhomSanPham" />
+              <datalist id="nhomSanPham">
+                <option *ngFor="let item of listNhomSanPham" value="{{ item.nhomSanPham }}"></option>
+              </datalist>
             </td>
+
             <td>
-              <input class="form-control" type="text" [(ngModel)]="versionSanPham" [ngModelOptions]="{ standalone: true }" />
+              <input type="text" class="form-control" data-cy="maSanPham" list="maSanPham" formControlName="maSanPham" />
             </td>
+
+            <td>
+              <input type="text" class="form-control" data-cy="versionSanPham" list="versionSanPham" formControlName="versionSanPham" />
+            </td>
+
             <td>
               <select class="form-control" formControlName="trangThai" [(ngModel)]="selectedStatus">
                 <option value="" hidden></option>

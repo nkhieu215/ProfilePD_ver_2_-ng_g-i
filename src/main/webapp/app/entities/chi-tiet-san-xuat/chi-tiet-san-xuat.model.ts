@@ -9,6 +9,7 @@ export interface IChiTietSanXuat {
   maxValue?: number | null;
   trungbinh?: number | null;
   donVi?: string | null;
+  trangThai?: string | null;
   sanXuatHangNgay?: ISanXuatHangNgay | null;
 }
 
@@ -22,6 +23,7 @@ export class ChiTietSanXuat implements IChiTietSanXuat {
     public maxValue?: number | null,
     public trungbinh?: number | null,
     public donVi?: string | null,
+    public trangThai?: string | null,
     public sanXuatHangNgay?: ISanXuatHangNgay | null
   ) {}
 }

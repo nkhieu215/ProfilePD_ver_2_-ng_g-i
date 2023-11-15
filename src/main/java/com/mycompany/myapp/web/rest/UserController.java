@@ -398,4 +398,12 @@ public class UserController {
         List<ChiTietLenhSanXuat> responseList = this.userServices.chiTietLenhSanXuat(maLenhSanXuatId);
         return responseList;
     }
+
+    //--------------------------------------------- * -----------------------------------------
+    //-------------------------------- Nhom san pham ---------------------------
+    @GetMapping("/nhom-san-pham")
+    public List<NhomSanPham> getAllNhomSanPham() {
+        List<NhomSanPham> nhomSanPhams = this.userServices.getAllNhomSanPham();
+        return nhomSanPhams;
+    }
 }

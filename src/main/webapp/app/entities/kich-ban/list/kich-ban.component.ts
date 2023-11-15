@@ -14,7 +14,6 @@ import { IKichBan } from '../kich-ban.model';
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/config/pagination.constants';
 import { KichBanService } from '../service/kich-ban.service';
 import { KichBanDeleteDialogComponent } from '../delete/kich-ban-delete-dialog.component';
-import { update } from 'cypress/types/lodash';
 
 @Component({
   selector: 'jhi-kich-ban',
@@ -31,11 +30,14 @@ export class KichBanComponent implements OnInit {
   sanXuatHangNgayUrl1 = this.applicationConfigService.getEndpointFor('api/san-xuat-hang-ngay/ma-kich-ban');
   putChiTietKichBanUrl = this.applicationConfigService.getEndpointFor('api/kich-ban/cap-nhat-thong-so-kich-ban');
   updateKichBanUrl = this.applicationConfigService.getEndpointFor('api/kich-ban/update');
+  nhomsSaNPhamUrl = this.applicationConfigService.getEndpointFor('https://65531af95449cfda0f2e1d72.mockapi.io/nhomSanPham');
+
   formSearch = this.formBuilder.group({
     maKichBan: '',
     maThietBi: '',
     loaiThietBi: '',
     dayChuyen: '',
+    nhomSanPham: '',
     maSanPham: '',
     versionSanPham: '',
     ngayTao: null,
@@ -117,6 +119,7 @@ export class KichBanComponent implements OnInit {
     maThietBi: [],
     loaiThietBi: [],
     dayChuyen: [],
+    nhomSanPham: [],
     maSanPham: [],
     versionSanPham: [],
     ngayTao: [],
@@ -374,6 +377,7 @@ export class KichBanComponent implements OnInit {
     // console.log('thiet bi: ', res;
     // console.log('tim kiem: ', timKiem);
   }
+
   xacNhanDongBo(): void {
     console.log('Chi tiet kich ban', this.chiTietKichBans);
     console.log('Chi tiet san xuat', this.chiTietSanXuats);
@@ -404,4 +408,10 @@ export class KichBanComponent implements OnInit {
       // window.location.reload();
     }
   }
+
+  // getNhomSanPham(): void {
+  //   this.http.get<any>(`${this.nhomsSaNPhamUrl}`).subscribe(res => {
+
+  //   })
+  // }
 }

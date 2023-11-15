@@ -21,9 +21,6 @@ public class ChiTietSanXuat implements Serializable {
     @Column(name = "ma_kich_ban")
     private String maKichBan;
 
-    @Column(name = "hang_sxhn")
-    private Integer hangSxhn;
-
     @Column(name = "thong_so")
     private String thongSo;
 
@@ -38,6 +35,9 @@ public class ChiTietSanXuat implements Serializable {
 
     @Column(name = "don_vi")
     private String donVi;
+
+    @Column(name = "trang_thai")
+    private String trangThai;
 
     @ManyToOne
     @JsonIgnoreProperties(value = { "chiTietSanXuats" }, allowSetters = true)
@@ -71,17 +71,17 @@ public class ChiTietSanXuat implements Serializable {
         this.maKichBan = maKichBan;
     }
 
-    public Integer getHangSxhn() {
-        return this.hangSxhn;
+    public String getTrangThai() {
+        return trangThai;
     }
 
-    public ChiTietSanXuat hangSxhn(Integer hangSxhn) {
-        this.setHangSxhn(hangSxhn);
+    public void setTrangThai(String trangThai) {
+        this.trangThai = trangThai;
+    }
+
+    public ChiTietSanXuat trangThai(String trangThai) {
+        this.setTrangThai(trangThai);
         return this;
-    }
-
-    public void setHangSxhn(Integer hangSxhn) {
-        this.hangSxhn = hangSxhn;
     }
 
     public String getThongSo() {
@@ -181,18 +181,33 @@ public class ChiTietSanXuat implements Serializable {
         return getClass().hashCode();
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
-        return "ChiTietSanXuat{" +
-            "id=" + getId() +
-            ", maKichBan='" + getMaKichBan() + "'" +
-            ", hangSxhn=" + getHangSxhn() +
-            ", thongSo='" + getThongSo() + "'" +
-            ", minValue=" + getMinValue() +
-            ", maxValue=" + getMaxValue() +
-            ", trungbinh=" + getTrungbinh() +
-            ", donVi='" + getDonVi() + "'" +
-            "}";
+        return (
+            "ChiTietSanXuat{" +
+            "id=" +
+            id +
+            ", maKichBan='" +
+            maKichBan +
+            '\'' +
+            ", thongSo='" +
+            thongSo +
+            '\'' +
+            ", minValue=" +
+            minValue +
+            ", maxValue=" +
+            maxValue +
+            ", trungbinh=" +
+            trungbinh +
+            ", donVi='" +
+            donVi +
+            '\'' +
+            ", trangThai='" +
+            trangThai +
+            '\'' +
+            ", sanXuatHangNgay=" +
+            sanXuatHangNgay +
+            '}'
+        );
     }
 }

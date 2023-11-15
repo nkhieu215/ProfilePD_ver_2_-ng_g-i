@@ -88,7 +88,7 @@ export class ChiTietKichBanUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: chiTietKichBan.id,
       maKichBan: chiTietKichBan.maKichBan,
-      hangMkb: chiTietKichBan.hangMkb,
+      hangMkb: chiTietKichBan.trangThai,
       thongSo: chiTietKichBan.thongSo,
       minValue: chiTietKichBan.minValue,
       maxValue: chiTietKichBan.maxValue,
@@ -119,7 +119,7 @@ export class ChiTietKichBanUpdateComponent implements OnInit {
       ...new ChiTietKichBan(),
       id: this.editForm.get(['id'])!.value,
       maKichBan: this.editForm.get(['maKichBan'])!.value,
-      hangMkb: this.editForm.get(['hangMkb'])!.value,
+      trangThai: this.editForm.get(['trangThai'])!.value,
       thongSo: this.editForm.get(['thongSo'])!.value,
       minValue: this.editForm.get(['minValue'])!.value,
       maxValue: this.editForm.get(['maxValue'])!.value,

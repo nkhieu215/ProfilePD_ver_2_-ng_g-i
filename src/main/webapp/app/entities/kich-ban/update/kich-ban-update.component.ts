@@ -38,6 +38,7 @@ export class KichBanUpdateComponent implements OnInit {
   listDayChuyenUrl = this.applicationConfigService.getEndpointFor('api/day-chuyen');
   delThongSoKichBanUrl = this.applicationConfigService.getEndpointFor('api/kich-ban/del-thong-so-kich-ban');
   updateKichBanUrl = this.applicationConfigService.getEndpointFor('api/kich-ban/update');
+  nhomSanPhamUrl = this.applicationConfigService.getEndpointFor('/api/nhom-san-pham');
 
   //-------------------------------------------------------------------------------
   isSaving = false;
@@ -68,6 +69,7 @@ export class KichBanUpdateComponent implements OnInit {
   @Input() maThietBi?: string | null | undefined = '';
   @Input() maSanPham = '';
   @Input() versionSanPham = '';
+  @Input() nhomSanPham?: string | null | undefined = '';
   // dayChuyen: string | null | undefined = '';
   // maSanPham: string | null | undefined = '';
   // versionSanPham: string | null | undefined = '';
@@ -87,6 +89,7 @@ export class KichBanUpdateComponent implements OnInit {
   listLoaiThietBi: { loaiThietBi: string }[] = [];
   listKichBan: IKichBan[] = [];
   listDayChuyen: { dayChuyen: string }[] = [];
+  listNhomSanPham: { nhomSanPham: string }[] = [];
   //---------------------------------------------------
   form!: FormGroup;
   listOfChiTietKichBan: {
@@ -107,6 +110,7 @@ export class KichBanUpdateComponent implements OnInit {
     maThietBi: [],
     loaiThietBi: [],
     dayChuyen: [],
+    nhomSanPham: [],
     maSanPham: [],
     versionSanPham: [],
     ngayTao: [],
@@ -132,6 +136,7 @@ export class KichBanUpdateComponent implements OnInit {
       tenKichBan: null,
       maThietBi: null,
       loaiThietBi: null,
+      nhomSanPham: null,
       maSanPham: null,
       verSanPham: null,
     });
@@ -147,6 +152,7 @@ export class KichBanUpdateComponent implements OnInit {
       this.getAllNhomThietBi();
       this.getAllDonVi();
       this.getAllKichBan();
+      this.getNhomSanPham();
       // lay danh sach nhom thiet bi
       this.http.get<any>(this.listNhomThietBiUrl).subscribe(res1 => {
         this.listNhomThietBi = res1;
@@ -191,12 +197,14 @@ export class KichBanUpdateComponent implements OnInit {
     console.log(this.selectedItems);
     console.log(this.onSelectItemRequest);
   }
+
   public onDeSelect(item: any): void {
     this.onSelectItemRequest = [];
     for (let i = 0; i < this.selectedItems.length; i++) {
       this.onSelectItemRequest.push(this.selectedItems[i].maThietBi);
     }
   }
+
   onSelectAll(items: any): void {
     console.log(items);
     this.selectedItems = items;
@@ -216,17 +224,20 @@ export class KichBanUpdateComponent implements OnInit {
       // console.log("danh sach thong so: ", this.listOfThongSo);
     });
   }
+
   getAllThietBi(): void {
     this.http.get<IThietBi>(this.listThietBiUrl).subscribe(res => {
       this.listOfThietBi = res as any;
       // console.log("danh sach thiet bi: ", this.listOfThietBi);
     });
   }
+
   getAllKichBan(): void {
     this.http.get<any>(this.listKichBanUrl).subscribe(data => {
       this.listKichBan = data;
     });
   }
+
   getAllNhomThietBi(): void {
     this.http.get<any>(this.listNhomThietBiUrl).subscribe(res => {
       this.listNhomThietBi = res;
@@ -246,12 +257,14 @@ export class KichBanUpdateComponent implements OnInit {
       // console.log('loai thiet bi:', this.listNhomThietBi);
     });
   }
+
   getAllDonVi(): void {
     this.http.get<any>(this.donViUrl).subscribe(res => {
       this.listDonVi = res;
       // console.log('don vi:', this.listDonVi);
     });
   }
+
   getMaThietBiUpdate(loaiTB: string | undefined | null, maTB: string | undefined | null): void {
     //---------------------------------- Set thông tin tương ứng theo Nhóm thiết bị-----------------------------
     this.listMaThietBi = [];
@@ -277,6 +290,7 @@ export class KichBanUpdateComponent implements OnInit {
       console.log('item log', this.selectedItems);
     }
   }
+
   getMaThietBi(): void {
     //---------------------------------- Set thông tin tương ứng theo Nhóm thiết bị-----------------------------
     this.listMaThietBi = [];
@@ -295,6 +309,7 @@ export class KichBanUpdateComponent implements OnInit {
       // console.log("day chuyen:", this.listDayChuyen)
     });
   }
+
   //------------------------------ lay thong tin thiet bi thong qua loai thiet bi ------------------------------
   getThietBi(): void {
     this.listOfChiTietKichBan = [];
@@ -348,6 +363,13 @@ export class KichBanUpdateComponent implements OnInit {
   }
   //---------------------------------- ------------------------ -----------------------------
 
+  getNhomSanPham(): void {
+    this.http.get<any>(this.nhomSanPhamUrl).subscribe(data => {
+      this.listNhomSanPham = data;
+      console.log('nhom san pham', this.listNhomSanPham);
+    });
+  }
+
   previousState(): void {
     window.history.back();
   }
@@ -355,7 +377,7 @@ export class KichBanUpdateComponent implements OnInit {
   trackThietBiById(_index: number, item: IThietBi): number {
     return item.id!;
   }
-
+  // tạo mới kịch bản
   save(): void {
     this.isSaving = true;
     const kichBan = this.createFromForm();
@@ -425,7 +447,7 @@ export class KichBanUpdateComponent implements OnInit {
   onSaveFinalize(): void {
     this.isSaving = false;
   }
-
+  // pop tạo mới kịch bản
   openSuccessPopupService(): void {
     console.log('aaa', this.editForm.get(['id'])!.value);
     if (this.editForm.get(['id'])!.value !== undefined) {
@@ -456,7 +478,6 @@ export class KichBanUpdateComponent implements OnInit {
 
   openSuccessPopup(): void {
     this.showSuccessPopup = true;
-    console.log('idkb', this.listOfChiTietKichBan[1].idKichBan);
     if (this.listOfChiTietKichBan[1].idKichBan === undefined) {
       for (let i = 0; i < this.listOfChiTietKichBan.length; i++) {
         this.listOfChiTietKichBan[i].idKichBan = this.idKichBan;
@@ -470,6 +491,7 @@ export class KichBanUpdateComponent implements OnInit {
         this.resultThongSo = 'Cập nhật chi tiết kịch bản thành công';
       });
     }
+    console.log('idkb', this.listOfChiTietKichBan[1].idKichBan);
   }
 
   closeSuccessPopup(): void {
@@ -483,6 +505,7 @@ export class KichBanUpdateComponent implements OnInit {
       maThietBi: kichBan.maThietBi,
       loaiThietBi: kichBan.loaiThietBi,
       dayChuyen: kichBan.dayChuyen,
+      nhomSanPham: kichBan.nhomSanPham,
       maSanPham: kichBan.maSanPham,
       versionSanPham: kichBan.versionSanPham,
       ngayTao: kichBan.ngayTao ? kichBan.ngayTao.format(DATE_TIME_FORMAT) : null,
@@ -504,9 +527,10 @@ export class KichBanUpdateComponent implements OnInit {
       maKichBan: this.editForm.get(['maKichBan'])!.value,
       maThietBi: this.onSelectItemRequest.toString(),
       loaiThietBi: this.editForm.get(['loaiThietBi'])!.value,
-      dayChuyen: this.dayChuyen,
-      maSanPham: this.maSanPham,
-      versionSanPham: this.versionSanPham,
+      dayChuyen: this.editForm.get(['dayChuyen'])!.value,
+      nhomSanPham: this.editForm.get(['nhomSanPham'])!.value,
+      maSanPham: this.editForm.get(['maSanPham'])!.value,
+      versionSanPham: this.editForm.get(['versionSanPham'])!.value,
       ngayTao: this.editForm.get(['ngayTao'])!.value ? dayjs(this.editForm.get(['ngayTao'])!.value, DATE_TIME_FORMAT) : undefined,
       timeUpdate: this.editForm.get(['timeUpdate'])!.value ? dayjs(this.editForm.get(['timeUpdate'])!.value, DATE_TIME_FORMAT) : undefined,
       updateBy: this.account?.login,

@@ -67,9 +67,25 @@
                 <option *ngFor="let data of kichBans" value="{{ data.maThietBi }}"></option>
               </datalist>
             </th>
+
+            <th scope="col" jhiSortBy="nhomSanPham">
+              <span>Nhóm sản phẩm</span>
+              <input
+                #searchInput
+                class="nhomSanPham-col"
+                type="text"
+                formControlName="nhomSanPham"
+                placeholder="search"
+                list="nhomSanPham"
+              />
+              <datalist id="nhomSanPham">
+                <option *ngFor="let data of kichBans" value="{{ data.nhomSanPham }}"></option>
+              </datalist>
+            </th>
+
             <!-- ----------------------------- Tìm kiếm theo Nhóm sản phẩm ----------------------------->
             <th scope="col" jhiSortBy="maSanPham">
-              <span>Nhóm sản phẩm</span>
+              <span>Mã sản phẩm</span>
               <input #searchInput class="maSanPham-col" type="text" formControlName="maSanPham" placeholder="search" list="maSanPham" />
               <datalist id="maSanPham">
                 <option *ngFor="let data of kichBans" value="{{ data.maSanPham }}"></option>
@@ -127,17 +143,71 @@
             data-cy="entityTable"
           >
             <td>
-              {{ i + 1 }}
+              <span>
+                {{ i + 1 }}
+              </span>
             </td>
-            <td>{{ kichBan.maKichBan }}</td>
-            <td>{{ kichBan.loaiThietBi }}</td>
-            <td>{{ kichBan.maThietBi }}</td>
-            <td>{{ kichBan.maSanPham }}</td>
-            <td>{{ kichBan.versionSanPham }}</td>
-            <td>{{ kichBan.ngayTao | formatMediumDatetime }}</td>
-            <td>{{ kichBan.timeUpdate | formatMediumDatetime }}</td>
-            <td>{{ kichBan.updateBy }}</td>
-            <td>{{ kichBan.trangThai }}</td>
+
+            <td>
+              <span>
+                {{ kichBan.maKichBan }}
+              </span>
+            </td>
+
+            <td>
+              <span>
+                {{ kichBan.loaiThietBi }}
+              </span>
+            </td>
+
+            <td>
+              <span>
+                {{ kichBan.maThietBi }}
+              </span>
+            </td>
+
+            <td>
+              <span>
+                {{ kichBan.nhomSanPham }}
+              </span>
+            </td>
+
+            <td>
+              <span>
+                {{ kichBan.maSanPham }}
+              </span>
+            </td>
+
+            <td>
+              <span>
+                {{ kichBan.versionSanPham }}
+              </span>
+            </td>
+
+            <td>
+              <span>
+                {{ kichBan.ngayTao | formatMediumDatetime }}
+              </span>
+            </td>
+
+            <td>
+              <span>
+                {{ kichBan.timeUpdate | formatMediumDatetime }}
+              </span>
+            </td>
+
+            <td>
+              <span>
+                {{ kichBan.updateBy }}
+              </span>
+            </td>
+
+            <td>
+              <span>
+                {{ kichBan.trangThai }}
+              </span>
+            </td>
+
             <td class="text-end">
               <div class="btn-group">
                 <button
@@ -225,7 +295,7 @@
               <th scope="col" jhiSortBy="loaiThietBi"><span>Nhóm thiết bị</span></th>
               <th scope="col" jhiSortBy="maThietBi"><span>Mã thiết bị</span></th>
               <th scope="col" jhiSortBy="dayChuyen"><span>Dây chuyền</span></th>
-              <th scope="col" jhiSortBy="maSanPham"><span>Nhóm sản phẩm</span></th>
+              <th scope="col" jhiSortBy="nhomSanPham"><span>Nhóm sản phẩm</span></th>
               <th scope="col" jhiSortBy="versionSanPham"><span>Version sản phẩm</span></th>
             </tr>
           </thead>
@@ -245,7 +315,7 @@
               <span>{{ kichBan.dayChuyen }}</span>
             </td>
             <td>
-              <span>{{ kichBan.maSanPham }}</span>
+              <span>{{ kichBan.nhomSanPham }}</span>
             </td>
             <td>
               <span>{{ kichBan.versionSanPham }}</span>
@@ -260,7 +330,7 @@
               <th scope="col" jhiSortBy="loaiThietBi"><span>Nhóm thiết bị</span></th>
               <th scope="col" jhiSortBy="maThietBi"><span>Mã thiết bị</span></th>
               <th scope="col" jhiSortBy="dayChuyen"><span>Dây chuyền</span></th>
-              <th scope="col" jhiSortBy="maSanPham"><span>Nhóm sản phẩm</span></th>
+              <th scope="col" jhiSortBy="nhomSanPham"><span>Nhóm sản phẩm</span></th>
               <th scope="col" jhiSortBy="versionSanPham"><span>Version sản phẩm</span></th>
             </tr>
           </thead>
@@ -280,7 +350,7 @@
               <span>{{ kichBan.dayChuyen }}</span>
             </td>
             <td>
-              <span>{{ kichBan.maSanPham }}</span>
+              <span>{{ kichBan.nhomSanPham }}</span>
             </td>
             <td>
               <span>{{ kichBan.versionSanPham }}</span>

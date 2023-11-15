@@ -21,9 +21,6 @@ public class ChiTietKichBan implements Serializable {
     @Column(name = "ma_kich_ban")
     private String maKichBan;
 
-    @Column(name = "hang_mkb")
-    private Integer hangMkb;
-
     @Column(name = "thong_so")
     private String thongSo;
 
@@ -41,6 +38,9 @@ public class ChiTietKichBan implements Serializable {
 
     @Column(name = "phan_loai")
     private String phanLoai;
+
+    @Column(name = "trang_thai")
+    private String trangThai;
 
     @ManyToOne
     @JsonIgnoreProperties(value = { "chiTietKichBans" }, allowSetters = true)
@@ -74,17 +74,17 @@ public class ChiTietKichBan implements Serializable {
         this.maKichBan = maKichBan;
     }
 
-    public Integer getHangMkb() {
-        return this.hangMkb;
+    public String getTrangThai() {
+        return trangThai;
     }
 
-    public ChiTietKichBan hangMkb(Integer hangMkb) {
-        this.setHangMkb(hangMkb);
+    public void setTrangThai(String trangThai) {
+        this.trangThai = trangThai;
+    }
+
+    public ChiTietKichBan trangThai(String trangThai) {
+        this.setTrangThai(trangThai);
         return this;
-    }
-
-    public void setHangMkb(Integer hangMkb) {
-        this.hangMkb = hangMkb;
     }
 
     public String getThongSo() {
@@ -197,19 +197,36 @@ public class ChiTietKichBan implements Serializable {
         return getClass().hashCode();
     }
 
-    // prettier-ignore
     @Override
     public String toString() {
-        return "ChiTietKichBan{" +
-            "id=" + getId() +
-            ", maKichBan='" + getMaKichBan() + "'" +
-            ", hangMkb=" + getHangMkb() +
-            ", thongSo='" + getThongSo() + "'" +
-            ", minValue=" + getMinValue() +
-            ", maxValue=" + getMaxValue() +
-            ", trungbinh=" + getTrungbinh() +
-            ", donVi='" + getDonVi() + "'" +
-            ", phanLoai='" + getPhanLoai() + "'" +
-            "}";
+        return (
+            "ChiTietKichBan{" +
+            "id=" +
+            id +
+            ", maKichBan='" +
+            maKichBan +
+            '\'' +
+            ", thongSo='" +
+            thongSo +
+            '\'' +
+            ", minValue=" +
+            minValue +
+            ", maxValue=" +
+            maxValue +
+            ", trungbinh=" +
+            trungbinh +
+            ", donVi='" +
+            donVi +
+            '\'' +
+            ", phanLoai='" +
+            phanLoai +
+            '\'' +
+            ", trangThai='" +
+            trangThai +
+            '\'' +
+            ", kichBan=" +
+            kichBan +
+            '}'
+        );
     }
 }

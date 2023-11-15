@@ -2,7 +2,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { IThietBi } from 'app/entities/thiet-bi/thiet-bi.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
-import { HttpHeaders, HttpResponse, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -28,14 +28,13 @@ export class SanXuatHangNgayComponent implements OnInit {
     maThietBi: '',
     loaiThietBi: '',
     dayChuyen: '',
+    nhomSanPham: '',
     maSanPham: '',
     versionSanPham: '',
     ngayTao: null,
     timeUpdate: null,
     trangThai: '',
   });
-
-
 
   sanXuatHangNgays?: ISanXuatHangNgay[];
   isLoading = false;
@@ -160,8 +159,6 @@ export class SanXuatHangNgayComponent implements OnInit {
       }
     });
   }
-
-
 
   onError(): void {
     this.ngbPaginationPage = this.page ?? 1;

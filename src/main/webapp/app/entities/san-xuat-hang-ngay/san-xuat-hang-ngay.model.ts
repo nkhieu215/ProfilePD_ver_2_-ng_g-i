@@ -7,12 +7,13 @@ export interface ISanXuatHangNgay {
   maThietBi?: string | null;
   loaiThietBi?: string | null;
   dayChuyen?: string | null;
+  nhomSanPham?: string | null;
   maSanPham?: string | null;
   versionSanPham?: string | null;
   ngayTao?: dayjs.Dayjs | null;
   timeUpdate?: dayjs.Dayjs | null;
   trangThai?: string | null;
-  signal?:number|null;
+  signal?: number | null;
   chiTietSanXuats?: IChiTietSanXuat[] | null;
 }
 
@@ -23,12 +24,13 @@ export class SanXuatHangNgay implements ISanXuatHangNgay {
     public maThietBi?: string | null,
     public loaiThietBi?: string | null,
     public dayChuyen?: string | null,
+    public nhomSanPham?: string | null,
     public maSanPham?: string | null,
     public versionSanPham?: string | null,
     public ngayTao?: dayjs.Dayjs | null,
     public timeUpdate?: dayjs.Dayjs | null,
     public trangThai?: string | null,
-    public signal?:number|null,
+    public signal?: number | null,
     public chiTietSanXuats?: IChiTietSanXuat[] | null
   ) {}
 }

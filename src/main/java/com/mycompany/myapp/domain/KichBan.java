@@ -18,8 +18,7 @@ public class KichBan implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -60,9 +59,9 @@ public class KichBan implements Serializable {
     @JsonIgnoreProperties(value = { "kichBan" }, allowSetters = true)
     private Set<ChiTietKichBan> chiTietKichBans = new HashSet<>();
 
-    @OneToMany(mappedBy = "kichBan")
-    @JsonIgnoreProperties(value = { "kichBan" }, allowSetters = true)
-    private Set<NhomSanPham> nhomSanPhams = new HashSet<>();
+    //    @OneToMany(mappedBy = "kichBan")
+    //    @JsonIgnoreProperties(value = { "kichBan" }, allowSetters = true)
+    //    private Set<NhomSanPham> nhomSanPhams = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -253,36 +252,36 @@ public class KichBan implements Serializable {
         return this;
     }
 
-    public Set<NhomSanPham> getNhomSanPhams() {
-        return this.nhomSanPhams;
-    }
+    //    public Set<NhomSanPham> getNhomSanPhams() {
+    //        return this.nhomSanPhams;
+    //    }
 
-    public void setNhomSanPhams(Set<NhomSanPham> nhomSanPhams) {
-        if (this.nhomSanPhams != null) {
-            this.nhomSanPhams.forEach(i -> i.setKichBan(null));
-        }
-        if (nhomSanPhams != null) {
-            nhomSanPhams.forEach(i -> i.setKichBan(this));
-        }
-        this.nhomSanPhams = nhomSanPhams;
-    }
+    //    public void setNhomSanPhams(Set<NhomSanPham> nhomSanPhams) {
+    //        if (this.nhomSanPhams != null) {
+    //            this.nhomSanPhams.forEach(i -> i.setKichBan(null));
+    //        }
+    //        if (nhomSanPhams != null) {
+    //            nhomSanPhams.forEach(i -> i.setKichBan(this));
+    //        }
+    //        this.nhomSanPhams = nhomSanPhams;
+    //    }
 
-    public KichBan nhomSanPhams(Set<NhomSanPham> nhomSanPhams) {
-        this.setNhomSanPhams(nhomSanPhams);
-        return this;
-    }
+    //    public KichBan nhomSanPhams(Set<NhomSanPham> nhomSanPhams) {
+    //        this.setNhomSanPhams(nhomSanPhams);
+    //        return this;
+    //    }
+    //
+    //    public KichBan addNhomSanPham(NhomSanPham nhomSanPham) {
+    //        this.nhomSanPhams.add(nhomSanPham);
+    //        nhomSanPham.setKichBan(this);
+    //        return this;
+    //    }
 
-    public KichBan addNhomSanPham(NhomSanPham nhomSanPham) {
-        this.nhomSanPhams.add(nhomSanPham);
-        nhomSanPham.setKichBan(this);
-        return this;
-    }
-
-    public KichBan removeNhomSanPham(NhomSanPham nhomSanPham) {
-        this.nhomSanPhams.remove(nhomSanPham);
-        nhomSanPham.setKichBan(null);
-        return this;
-    }
+    //    public KichBan removeNhomSanPham(NhomSanPham nhomSanPham) {
+    //        this.nhomSanPhams.remove(nhomSanPham);
+    //        nhomSanPham.setKichBan(null);
+    //        return this;
+    //    }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

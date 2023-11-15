@@ -132,8 +132,8 @@ public class ChiTietSanXuatResource {
                 if (chiTietSanXuat.getMaKichBan() != null) {
                     existingChiTietSanXuat.setMaKichBan(chiTietSanXuat.getMaKichBan());
                 }
-                if (chiTietSanXuat.getHangSxhn() != null) {
-                    existingChiTietSanXuat.setHangSxhn(chiTietSanXuat.getHangSxhn());
+                if (chiTietSanXuat.getTrangThai() != null) {
+                    existingChiTietSanXuat.setTrangThai(chiTietSanXuat.getTrangThai());
                 }
                 if (chiTietSanXuat.getThongSo() != null) {
                     existingChiTietSanXuat.setThongSo(chiTietSanXuat.getThongSo());

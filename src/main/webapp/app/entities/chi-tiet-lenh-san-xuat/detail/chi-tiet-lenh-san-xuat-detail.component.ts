@@ -1,3 +1,4 @@
+import { ILenhSanXuat } from './../../lenh-san-xuat/lenh-san-xuat.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -9,6 +10,7 @@ import { IChiTietLenhSanXuat } from '../chi-tiet-lenh-san-xuat.model';
 })
 export class ChiTietLenhSanXuatDetailComponent implements OnInit {
   chiTietLenhSanXuat: IChiTietLenhSanXuat | null = null;
+  lenhSanXuat: ILenhSanXuat | null = null;
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 

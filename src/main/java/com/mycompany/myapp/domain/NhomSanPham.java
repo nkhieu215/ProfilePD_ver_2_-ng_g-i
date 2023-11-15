@@ -14,8 +14,7 @@ public class NhomSanPham implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -25,9 +24,9 @@ public class NhomSanPham implements Serializable {
     @Column(name = "nhom_san_pham")
     private String nhomSanPham;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "chiTietKichBans", "nhomSanPhams" }, allowSetters = true)
-    private KichBan kichBan;
+    //    @ManyToOne
+    //    @JsonIgnoreProperties(value = { "chiTietKichBans", "nhomSanPhams" }, allowSetters = true)
+    //    private KichBan kichBan;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -70,18 +69,18 @@ public class NhomSanPham implements Serializable {
         this.nhomSanPham = nhomSanPham;
     }
 
-    public KichBan getKichBan() {
-        return this.kichBan;
-    }
+    //    public KichBan getKichBan() {
+    //        return this.kichBan;
+    //    }
+    //
+    //    public void setKichBan(KichBan kichBan) {
+    //        this.kichBan = kichBan;
+    //    }
 
-    public void setKichBan(KichBan kichBan) {
-        this.kichBan = kichBan;
-    }
-
-    public NhomSanPham kichBan(KichBan kichBan) {
-        this.setKichBan(kichBan);
-        return this;
-    }
+    //    public NhomSanPham kichBan(KichBan kichBan) {
+    //        this.setKichBan(kichBan);
+    //        return this;
+    //    }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

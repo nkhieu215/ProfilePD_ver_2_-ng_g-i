@@ -40,6 +40,7 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
   listDayChuyenUrl = this.applicationConfigService.getEndpointFor('api/day-chuyen');
   delUrl = this.applicationConfigService.getEndpointFor('api/san-xuat-hang-ngay/del-thong-so');
   changeSignalUrl = this.applicationConfigService.getEndpointFor('api/san-xuat-hang-ngay');
+  nhomSanPhamUrl = this.applicationConfigService.getEndpointFor('/api/nhom-san-pham');
 
   selectedStatus = 'active';
 
@@ -76,6 +77,7 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
   @Input() maThietBi?: string | null | undefined = '';
   @Input() loaiThietBi = '';
   @Input() dayChuyen?: string | null | undefined = '';
+  @Input() nhomSanPham?: string | null | undefined = '';
   @Input() maSanPham?: string | null | undefined = '';
   @Input() versionSanPham?: string | null | undefined = '';
   @Input() trangThai = '';
@@ -91,6 +93,7 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
   // ------------------ lưu tìm kiếm theo Nhóm thiết bị ---------------
   listMaThietBi: { maThietBi: string }[] = [];
   listDayChuyen: { dayChuyen: string }[] = [];
+  listNhomSanPham: { nhomSanPham: string }[] = [];
 
   listOfChiTietKichBan: {
     id: number;
@@ -125,6 +128,7 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
     maThietBi: [],
     loaiThietBi: [],
     dayChuyen: [],
+    nhomSanPham: [],
     maSanPham: [],
     versionSanPham: [],
     ngayTao: [],
@@ -152,6 +156,7 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
       this.getAllThongSo();
       this.getAllThietBi();
       this.getAllNhomThietBi();
+      this.getNhomSanPham();
       this.http.get<any>(this.listNhomThietBiUrl).subscribe(res1 => {
         this.listNhomThietBi = res1;
         if (sanXuatHangNgay.id === undefined) {
@@ -163,6 +168,7 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
           this.idSanXuatHangNgay = sanXuatHangNgay.id;
           this.maThietBi = sanXuatHangNgay.maThietBi;
           this.dayChuyen = sanXuatHangNgay.dayChuyen;
+          this.nhomSanPham = sanXuatHangNgay.nhomSanPham;
           this.maSanPham = sanXuatHangNgay.maSanPham;
           this.versionSanPham = sanXuatHangNgay.versionSanPham;
           this.loaiThietBi = sanXuatHangNgay.loaiThietBi;
@@ -227,43 +233,43 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
   getAllThongSo(): void {
     this.http.get<IQuanLyThongSo>(this.listThongSoUrl).subscribe(res => {
       this.listOfThongSo = res as any;
-      // console.log("danh sach thong so: ", this.listOfThongSo);
+      console.log('danh sach thong so: ', this.listOfThongSo);
     });
   }
   getAllThietBi(): void {
     this.http.get<IThietBi>(this.listThietBiUrl).subscribe(res => {
       this.listOfThietBi = res as any;
-      // console.log("danh sach thiet bi: ", this.listOfThietBi);
+      console.log('danh sach thiet bi: ', this.listOfThietBi);
     });
   }
   getAllNhomThietBi(): void {
     this.http.get<any>(this.listNhomThietBiUrl).subscribe(res => {
       this.listNhomThietBi = res;
-      // console.log('nhom thiet bi:', this.listNhomThietBi);
+      console.log('nhom thiet bi:', this.listNhomThietBi);
     });
   }
   getAllDonVi(): void {
     this.http.get<any>(this.donViUrl).subscribe(res => {
       this.listDonVi = res;
-      // console.log("don vi:", this.listDonVi);
+      console.log('don vi:', this.listDonVi);
     });
   }
   getAllKichBan(): void {
     this.http.get<any>(this.getKichBanUrl).subscribe(res => {
       this.listKichBan = res;
-      // console.log("kich ban:", this.listKichBan)
+      console.log('kich ban:', this.listKichBan);
     });
   }
   getAllDayChuyen(): void {
     this.http.get<any>(this.listDayChuyenUrl).subscribe(res => {
       this.listDayChuyen = res;
-      // console.log("day chuyen: ", this.listDayChuyen);
+      console.log('day chuyen: ', this.listDayChuyen);
     });
   }
 
   getMaThietBi(loaiTB: string | undefined | null, maTB: string | undefined | null): void {
     this.listMaThietBi = [];
-    // console.log('ma thiet bi:',this.listNhomThietBi)
+    console.log('ma thiet bi:', this.listNhomThietBi);
     console.log('loai thiet bi', loaiTB);
     for (let i = 0; i < this.listNhomThietBi.length; i++) {
       if (loaiTB === this.listNhomThietBi[i].loaiThietBi) {
@@ -302,6 +308,7 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
         // console.log('hello', this.listNhomThietBi);
         // set thông tin kịch bản để hiển thị
         this.dayChuyen = res.dayChuyen;
+        this.nhomSanPham = res.nhomSanPham;
         this.maSanPham = res.maSanPham;
         this.versionSanPham = res.versionSanPham;
         // set thông tin kịch bản để thêm mới
@@ -309,6 +316,7 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
           maThietBi: res.maThietBi,
           loaiThietBi: res.loaiThietBi,
           dayChuyen: res.dayChuyen,
+          nhomSanPham: res.nhomSanPham,
           maSanPham: res.maSanPham,
           versionSanPham: res.versionSanPham,
           trangThai: res.trangThai,
@@ -338,6 +346,13 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
       console.log('select item: ', { all: this.listMaThietBi, selected: this.selectedItems });
     });
     return this.selectedItems;
+  }
+
+  getNhomSanPham(): void {
+    this.http.get<any>(this.nhomSanPhamUrl).subscribe(data => {
+      this.listNhomSanPham = data;
+      console.log('nhom san pham', this.listNhomSanPham);
+    });
   }
 
   //-------------------------- set Dây chuyền tương ứng theo mã thiết bị -------------------
@@ -526,6 +541,7 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
       maThietBi: sanXuatHangNgay.maThietBi,
       loaiThietBi: sanXuatHangNgay.loaiThietBi,
       dayChuyen: sanXuatHangNgay.dayChuyen,
+      nhomSanPham: sanXuatHangNgay.nhomSanPham,
       maSanPham: sanXuatHangNgay.maSanPham,
       versionSanPham: sanXuatHangNgay.versionSanPham,
       ngayTao: sanXuatHangNgay.ngayTao ? sanXuatHangNgay.ngayTao.format(DATE_TIME_FORMAT) : null,
@@ -542,8 +558,9 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
       maKichBan: this.editForm.get(['maKichBan'])!.value,
       maThietBi: this.onSelectItemRequest.toString(),
       loaiThietBi: this.editForm.get(['loaiThietBi'])!.value,
-      dayChuyen: this.dayChuyen,
-      maSanPham: this.maSanPham,
+      dayChuyen: this.editForm.get(['dayChuyen'])!.value,
+      nhomSanPham: this.editForm.get(['nhomSanPham'])!.value,
+      maSanPham: this.editForm.get(['maSanPham'])!.value,
       versionSanPham: this.versionSanPham,
       ngayTao: this.editForm.get(['ngayTao'])!.value ? dayjs(this.editForm.get(['ngayTao'])!.value, DATE_TIME_FORMAT) : undefined,
       timeUpdate: this.editForm.get(['timeUpdate'])!.value ? dayjs(this.editForm.get(['timeUpdate'])!.value, DATE_TIME_FORMAT) : undefined,

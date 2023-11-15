@@ -60,7 +60,7 @@
     <changeSet author="Dell (generated)" id="1699862174266-45">
         <dropColumn columnName="signal" tableName="kich_ban"/>
     </changeSet>
-    <changeSet author="Dell (generated)" id="1699862174266-1">
+    <!-- <changeSet author="Dell (generated)" id="1699862174266-1">
         <alterSequence sequenceName="sequence_generator"/>
     </changeSet>
     <changeSet author="Dell (generated)" id="1699862174266-2">
@@ -70,7 +70,7 @@
         <alterSequence sequenceName="sequence_generator"/>
     </changeSet>
     <changeSet author="Dell (generated)" id="1699862174266-4">
-        <alterSequence sequenceName="sequence_generator"/>
+        <alterSequence sequenceName="sequence_generator"/> -->
     </changeSet>
     <changeSet author="Dell (generated)" id="1699862174266-5">
         <dropNotNullConstraint columnDataType="varchar(255)" columnName="loai_thiet_bi" tableName="kich_ban"/>

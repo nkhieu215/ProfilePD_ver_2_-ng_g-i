@@ -76,8 +76,17 @@
               </datalist>
             </th>
             <!-- ----------------------------- Tìm kiếm theo Nhóm sản phẩm ----------------------------->
-            <th scope="col" jhiSortBy="maSanPham">
+
+            <th scope="col" jhiSortBy="nhomSanPham">
               <span>Nhóm sản phẩm</span>
+              <input #searchInput type="text" formControlName="nhomSanPham" placeholder="search" list="nhomSanPham" />
+              <datalist id="nhomSanPham">
+                <option *ngFor="let data of sanXuatHangNgays" value="{{ data.nhomSanPham }}"></option>
+              </datalist>
+            </th>
+
+            <th scope="col" jhiSortBy="maSanPham">
+              <span>Mã sản phẩm</span>
               <input #searchInput type="text" formControlName="maSanPham" placeholder="search" list="maSanPham" />
               <datalist id="maSanPham">
                 <option *ngFor="let data of sanXuatHangNgays" value="{{ data.maSanPham }}"></option>
@@ -159,6 +168,7 @@
               {{ sanXuatHangNgay.maThietBi }}
             </td>
             <td>{{ sanXuatHangNgay.dayChuyen }}</td>
+            <td>{{ sanXuatHangNgay.nhomSanPham }}</td>
             <td>{{ sanXuatHangNgay.maSanPham }}</td>
             <td>{{ sanXuatHangNgay.versionSanPham }}</td>
             <td>{{ sanXuatHangNgay.ngayTao | formatMediumDatetime }}</td>

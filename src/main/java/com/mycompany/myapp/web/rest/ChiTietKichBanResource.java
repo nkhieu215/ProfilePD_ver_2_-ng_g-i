@@ -132,8 +132,8 @@ public class ChiTietKichBanResource {
                 if (chiTietKichBan.getMaKichBan() != null) {
                     existingChiTietKichBan.setMaKichBan(chiTietKichBan.getMaKichBan());
                 }
-                if (chiTietKichBan.getHangMkb() != null) {
-                    existingChiTietKichBan.setHangMkb(chiTietKichBan.getHangMkb());
+                if (chiTietKichBan.getTrangThai() != null) {
+                    existingChiTietKichBan.setTrangThai(chiTietKichBan.getTrangThai());
                 }
                 if (chiTietKichBan.getThongSo() != null) {
                     existingChiTietKichBan.setThongSo(chiTietKichBan.getThongSo());

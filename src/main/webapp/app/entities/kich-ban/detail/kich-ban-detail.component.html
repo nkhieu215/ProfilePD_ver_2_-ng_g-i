@@ -17,7 +17,8 @@
             <th scope="col" jhiSortBy="loaiThietBi"><span>Nhóm thiết bị</span></th>
             <th scope="col" jhiSortBy="maThietBi"><span>Mã thiết bị</span></th>
             <th scope="col" jhiSortBy="dayChuyen"><span>Dây chuyền</span></th>
-            <th scope="col" jhiSortBy="maSanPham"><span>Nhóm sản phẩm</span></th>
+            <th scope="col" jhiSortBy="nhomSanPham"><span>Nhóm sản phẩm</span></th>
+            <th scope="col" jhiSortBy="maSanPham"><span>Mã sản phẩm</span></th>
             <th scope="col" jhiSortBy="versionSanPham"><span>Version sản phẩm</span></th>
             <th scope="col" jhiSortBy="ngayTao"><span>Ngày tạo</span></th>
             <th scope="col" jhiSortBy="timeUpdate"><span>Ngày cập nhật</span></th>
@@ -40,6 +41,10 @@
 
           <td>
             <span>{{ kichBan.dayChuyen }}</span>
+          </td>
+
+          <td>
+            <span>{{ kichBan.nhomSanPham }}</span>
           </td>
 
           <td>
@@ -83,6 +88,7 @@
             <th scope="col" jhiSortBy="maxValue"><span>Max</span></th>
             <th scope="col" jhiSortBy="trungBinh"><span>Trung bình</span></th>
             <th scope="col" jhiSortBy="donVi"><span>Đơn vị</span></th>
+            <th scope="col" jhiSortBy="trangThai"><span>Trạng thái</span></th>
           </tr>
         </thead>
 
@@ -108,6 +114,10 @@
           </td>
           <td>
             <span>{{ data.donVi }}</span>
+          </td>
+
+          <td>
+            <span>{{ data.trangThai }}</span>
           </td>
         </tbody>
       </table>

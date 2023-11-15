@@ -15,6 +15,7 @@
             <th scope="col" jhiSortBy="maThietBi"><span>Mã thiết bị- Mã máy</span></th>
             <th scope="col" jhiSortBy="dayChuyen"><span>Dây chuyền</span></th>
             <th scope="col" jhiSortBy="nhomSanPham"><span>Nhóm sản phẩm</span></th>
+            <th scope="col" jhiSortBy="maSanPham"><span>Mã sản phẩm</span></th>
             <th scope="col" jhiSortBy="versionSanPham"><span>Version sản phẩm</span></th>
             <th scope="col" jhiSortBy="trangThai"><span>Trạng thái</span></th>
           </tr>
@@ -51,37 +52,25 @@
             </td>
 
             <td>
-              <input
-                class="form-control"
-                data-cy="dayChuyen"
-                list="dayChuyen"
-                [(ngModel)]="dayChuyen"
-                [ngModelOptions]="{ standalone: true }"
-              />
+              <input class="form-control" data-cy="dayChuyen" list="dayChuyen" formControlName="dayChuyen" />
               <datalist id="dayChuyen">
                 <option *ngFor="let item of listDayChuyen" value="{{ item.dayChuyen }}"></option>
               </datalist>
             </td>
 
             <td>
-              <input
-                class="form-control"
-                id="maSanPham"
-                data-cy="maSanPham"
-                name="maSanPham"
-                [(ngModel)]="maSanPham"
-                [ngModelOptions]="{ standalone: true }"
-              />
+              <input class="form-control" list="nhomSanPham" data-cy="nhomSanPham" formControlName="nhomSanPham" />
+              <datalist id="nhomSanPham">
+                <option *ngFor="let items of listNhomSanPham" value="{{ items.nhomSanPham }}"></option>
+              </datalist>
             </td>
+
             <td>
-              <input
-                class="form-control"
-                id="versionSanPham"
-                data-cy="versionSanPham"
-                name="versionSanPham"
-                [(ngModel)]="versionSanPham"
-                [ngModelOptions]="{ standalone: true }"
-              />
+              <input class="form-control" id="maSanPham" data-cy="maSanPham" formControlName="maSanPham" />
+            </td>
+
+            <td>
+              <input class="form-control" id="versionSanPham" data-cy="versionSanPham" formControlName="versionSanPham" />
             </td>
             <td>
               <select class="form-control" formControlName="trangThai" [(ngModel)]="selectedStatus">
@@ -132,6 +121,7 @@
               </th>
               <th scope="col" jhiSortBy="don"><span>Đơn vị</span></th>
               <th scope="col" jhiSortBy="phanLoai"><span>Phân loại</span></th>
+              <th scope="col">Trạng thái</th>
               <th scope="col">Option</th>
             </tr>
           </thead>
@@ -192,6 +182,15 @@
                 <option *ngFor="let item of listDonVi" value="{{ item.donVi }}"></option>
               </datalist>
             </td>
+
+            <td>
+              <select class="form-control" [(ngModel)]="data.phanLoai" [ngModelOptions]="{ standalone: true }">
+                <option [ngValue]="" hidden>{{ data.phanLoai }}</option>
+                <option value="Thông số máy">Thông số máy</option>
+                <option value="Thông số sản phẩm">Thông số sản phẩm</option>
+              </select>
+            </td>
+
             <td>
               <select class="form-control" [(ngModel)]="data.phanLoai" [ngModelOptions]="{ standalone: true }">
                 <option [ngValue]="" hidden>{{ data.phanLoai }}</option>
