@@ -388,6 +388,7 @@ export class SanXuatHangNgayUpdateComponent implements OnInit {
     } else {
       this.showSuccessPopupService = false;
       this.subscribeToCreateResponse(this.sanXuatHangNgayService.create(sanXuatHangNgay));
+      console.log('sxhn', sanXuatHangNgay);
     }
   }
 

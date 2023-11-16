@@ -159,7 +159,7 @@ export class KichBanUpdateComponent implements OnInit {
         console.log('nhom thiet bi: ', this.listNhomThietBi);
         if (kichBan.id === undefined) {
           this.editForm.patchValue({ id: undefined });
-          const today = dayjs().startOf('day');
+          const today = dayjs().startOf('minute');
           kichBan.ngayTao = today;
           kichBan.timeUpdate = today;
         } else {
@@ -379,8 +379,15 @@ export class KichBanUpdateComponent implements OnInit {
   }
   // tạo mới kịch bản
   save(): void {
+    const today = dayjs().startOf('minute');
+    this.editForm.patchValue({
+      ngayTao: today,
+      timeUpdate: today,
+    });
     this.isSaving = true;
     const kichBan = this.createFromForm();
+    console.log('ngay tao ', this.editForm.get(['ngayTao'])!.value);
+    console.log('thoi gian cap nhat', this.editForm.get(['timeUpdate'])!.value);
     if (kichBan.id !== undefined) {
       this.showSuccessPopupService = false;
       this.subscribeToSaveResponse(this.kichBanService.update(kichBan));
@@ -538,6 +545,7 @@ export class KichBanUpdateComponent implements OnInit {
       signal: 1,
     };
   }
+
   //----------------------------------------- them moi chi tiet kich ban --------------------------
   addRowThongSoKichBan(): void {
     const newRow = {

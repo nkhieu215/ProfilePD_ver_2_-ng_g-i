@@ -30,7 +30,7 @@ export class KichBanComponent implements OnInit {
   sanXuatHangNgayUrl1 = this.applicationConfigService.getEndpointFor('api/san-xuat-hang-ngay/ma-kich-ban');
   putChiTietKichBanUrl = this.applicationConfigService.getEndpointFor('api/kich-ban/cap-nhat-thong-so-kich-ban');
   updateKichBanUrl = this.applicationConfigService.getEndpointFor('api/kich-ban/update');
-  nhomsSaNPhamUrl = this.applicationConfigService.getEndpointFor('https://65531af95449cfda0f2e1d72.mockapi.io/nhomSanPham');
+  nhomsSaNPhamUrl = this.applicationConfigService.getEndpointFor('/api/nhom-san-pham');
 
   formSearch = this.formBuilder.group({
     maKichBan: '',
