@@ -159,9 +159,6 @@ export class KichBanUpdateComponent implements OnInit {
         console.log('nhom thiet bi: ', this.listNhomThietBi);
         if (kichBan.id === undefined) {
           this.editForm.patchValue({ id: undefined });
-          const today = dayjs().startOf('minute');
-          kichBan.ngayTao = today;
-          kichBan.timeUpdate = today;
         } else {
           //Lấy danh sách thông số thiết bị theo id
           this.http.get<any>(`${this.getChiTietKichBanUrl}/${kichBan.id as number}`).subscribe(res => {
