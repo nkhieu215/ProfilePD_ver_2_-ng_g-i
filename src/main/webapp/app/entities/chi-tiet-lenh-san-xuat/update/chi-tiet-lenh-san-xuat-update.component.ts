@@ -16,9 +16,12 @@ import { LenhSanXuatService } from 'app/entities/lenh-san-xuat/service/lenh-san-
 @Component({
   selector: 'jhi-chi-tiet-lenh-san-xuat-update',
   templateUrl: './chi-tiet-lenh-san-xuat-update.component.html',
+  styleUrls: ['./chi-tiet-lenh-san-xuat-update.component.css'],
 })
 export class ChiTietLenhSanXuatUpdateComponent implements OnInit {
   isSaving = false;
+  predicate!: string;
+  ascending!: boolean;
 
   lenhSanXuatsSharedCollection: ILenhSanXuat[] = [];
 
@@ -95,26 +98,26 @@ export class ChiTietLenhSanXuatUpdateComponent implements OnInit {
     return item.id!;
   }
 
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<IChiTietLenhSanXuat>>): void {
+  subscribeToSaveResponse(result: Observable<HttpResponse<IChiTietLenhSanXuat>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
       next: () => this.onSaveSuccess(),
       error: () => this.onSaveError(),
     });
   }
 
-  protected onSaveSuccess(): void {
+  onSaveSuccess(): void {
     this.previousState();
   }
 
-  protected onSaveError(): void {
+  onSaveError(): void {
     // Api for inheritance.
   }
 
-  protected onSaveFinalize(): void {
+  onSaveFinalize(): void {
     this.isSaving = false;
   }
 
-  protected updateForm(chiTietLenhSanXuat: IChiTietLenhSanXuat): void {
+  updateForm(chiTietLenhSanXuat: IChiTietLenhSanXuat): void {
     this.editForm.patchValue({
       id: chiTietLenhSanXuat.id,
       reelID: chiTietLenhSanXuat.reelID,
@@ -156,7 +159,7 @@ export class ChiTietLenhSanXuatUpdateComponent implements OnInit {
     );
   }
 
-  protected loadRelationshipsOptions(): void {
+  loadRelationshipsOptions(): void {
     this.lenhSanXuatService
       .query()
       .pipe(map((res: HttpResponse<ILenhSanXuat[]>) => res.body ?? []))
@@ -168,7 +171,7 @@ export class ChiTietLenhSanXuatUpdateComponent implements OnInit {
       .subscribe((lenhSanXuats: ILenhSanXuat[]) => (this.lenhSanXuatsSharedCollection = lenhSanXuats));
   }
 
-  protected createFromForm(): IChiTietLenhSanXuat {
+  createFromForm(): IChiTietLenhSanXuat {
     return {
       ...new ChiTietLenhSanXuat(),
       id: this.editForm.get(['id'])!.value,
@@ -204,5 +207,22 @@ export class ChiTietLenhSanXuatUpdateComponent implements OnInit {
       checked: this.editForm.get(['checked'])!.value,
       lenhSanXuat: this.editForm.get(['lenhSanXuat'])!.value,
     };
+  }
+
+  exportToExcel(): void {
+    // if (this.chiTietSanXuats) {
+    //   const exportData = this.chiTietSanXuats.map(item => ({
+    //     'Thông số': item.thongSo,
+    //     ' Min': item.minValue,
+    //     Max: item.maxValue,
+    //     'Trung bình': item.trungbinh,
+    //     'Đơn vị': item.donVi,
+    //   }));
+    //   const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportData);
+    //   // const ws2: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportDataKB);
+    //   const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    //   XLSX.utils.book_append_sheet(wb, ws, 'ChiTietSanXuatHangNgay');
+    //   XLSX.writeFile(wb, 'chi-tiet-san-xuat-hang-ngay.xlsx');
+    // }
   }
 }
